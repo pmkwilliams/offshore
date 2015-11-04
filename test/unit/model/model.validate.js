@@ -2,7 +2,7 @@
  * Test Model.validate() instance method
  */
 
-var Waterline = require('../../../lib/waterline'),
+var Offshore = require('../../../lib/offshore'),
     assert = require('assert');
 
 describe('Model', function() {
@@ -15,9 +15,9 @@ describe('Model', function() {
      */
 
     before(function(done) {
-      var waterline = new Waterline();
+      var offshore = new Offshore();
 
-      var Model = Waterline.Collection.extend({
+      var Model = Offshore.Collection.extend({
         connection: 'foo',
         tableName: 'person',
         attributes: {
@@ -32,7 +32,7 @@ describe('Model', function() {
         }
       });
 
-      waterline.loadCollection(Model);
+      offshore.loadCollection(Model);
 
       var adapterDef = {};
 
@@ -42,7 +42,7 @@ describe('Model', function() {
         }
       };
 
-      waterline.initialize({ adapters: { foobar: adapterDef }, connections: connections }, function(err, colls) {
+      offshore.initialize({ adapters: { foobar: adapterDef }, connections: connections }, function(err, colls) {
         if(err) done(err);
         collection = colls.collections.person;
         done();

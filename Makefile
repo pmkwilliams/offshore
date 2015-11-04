@@ -8,8 +8,8 @@ test-unit:
 
 test-integration:
 	@echo "\nRunning integration tests..."
-	rm -rf node_modules/waterline-adapter-tests/node_modules/waterline;
-	ln -s $(ROOT) node_modules/waterline-adapter-tests/node_modules/waterline;
+	rm -rf node_modules/offshore-adapter-tests/node_modules/offshore;
+	ln -s $(ROOT) node_modules/offshore-adapter-tests/node_modules/offshore;
 	@NODE_ENV=test node test/adapter/runner.js
 
 coverage:

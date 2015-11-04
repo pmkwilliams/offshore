@@ -1,7 +1,7 @@
 /**
  * Module Dependencies
  */
-var Waterline = require('../../../lib/waterline');
+var Offshore = require('../../../lib/offshore');
 var _ = require('lodash');
 
 /**
@@ -19,7 +19,7 @@ module.exports = function (options) {
     var adapterIdentity = 'barbaz';
     options.adapter.identity = adapterIdentity;
 
-    var Model = Waterline.Collection.extend(
+    var Model = Offshore.Collection.extend(
       _.merge({
         attributes: {},
         connection: 'my_foo',
@@ -28,8 +28,8 @@ module.exports = function (options) {
       }, options.properties || {})
     );
 
-    var waterline = new Waterline();
-    waterline.loadCollection(Model);
+    var offshore = new Offshore();
+    offshore.loadCollection(Model);
 
     var connections = {
       'my_foo': {
@@ -37,7 +37,7 @@ module.exports = function (options) {
       }
     };
 
-    waterline.initialize({ adapters: { barbaz: options.adapter }, connections: connections }, function(err, ocean) {
+    offshore.initialize({ adapters: { barbaz: options.adapter }, connections: connections }, function(err, ocean) {
       if (err) return done(err);
       
       // Save access to all collections + connections

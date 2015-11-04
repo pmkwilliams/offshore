@@ -25,17 +25,17 @@
 *************************************************************************/
 
 
-var Waterline = require('../../../../lib/waterline'),
+var Offshore = require('../../../../lib/offshore'),
         assert = require('assert'),
         async = require('async');
 
-var waterline = new Waterline();
+var offshore = new Offshore();
 var migrate = 'drop';
 
 describe('Populate Deep', function () {
   var companyModel, taxiModel, driverModel, rideModel, constructorModel, addressModel, breakDownModel, departmentModel;
   before(function (done) {
-    var Company = Waterline.Collection.extend({
+    var Company = Offshore.Collection.extend({
       identity: 'Company',
       connection: 'pop_deep',
       tableName: 'company_table',
@@ -59,7 +59,7 @@ describe('Populate Deep', function () {
       }
     });
 
-    var Driver = Waterline.Collection.extend({
+    var Driver = Offshore.Collection.extend({
       identity: 'Driver',
       connection: 'pop_deep',
       tableName: 'driver_table',
@@ -86,7 +86,7 @@ describe('Populate Deep', function () {
       }
     });
 
-    var Taxi = Waterline.Collection.extend({
+    var Taxi = Offshore.Collection.extend({
       identity: 'Taxi',
       connection: 'pop_deep',
       tableName: 'taxi_table',
@@ -117,7 +117,7 @@ describe('Populate Deep', function () {
       }
     });
 
-    var Ride = Waterline.Collection.extend({
+    var Ride = Offshore.Collection.extend({
       identity: 'Ride',
       connection: 'pop_deep',
       tableName: 'ride_table',
@@ -132,7 +132,7 @@ describe('Populate Deep', function () {
       }
     });
 
-    var Address = Waterline.Collection.extend({
+    var Address = Offshore.Collection.extend({
       identity: 'Address',
       connection: 'pop_deep',
       tableName: 'address_table',
@@ -148,7 +148,7 @@ describe('Populate Deep', function () {
       }
     });
 
-    var Constructor = Waterline.Collection.extend({
+    var Constructor = Offshore.Collection.extend({
       identity: 'Constructor',
       connection: 'pop_deep',
       tableName: 'constructor_table',
@@ -172,7 +172,7 @@ describe('Populate Deep', function () {
       }
     });
 
-    var BreakDown = Waterline.Collection.extend({
+    var BreakDown = Offshore.Collection.extend({
       identity: 'breakdown',
       connection: 'pop_deep',
       tableName: 'breakdown_table',
@@ -191,7 +191,7 @@ describe('Populate Deep', function () {
       }
     });
 
-    var Department = Waterline.Collection.extend({
+    var Department = Offshore.Collection.extend({
       identity: 'Department',
       connection: 'pop_deep',
       tableName: 'department_table',
@@ -256,20 +256,20 @@ describe('Populate Deep', function () {
     ];
 
 
-    waterline.loadCollection(Company);
-    waterline.loadCollection(Driver);
-    waterline.loadCollection(Taxi);
-    waterline.loadCollection(Address);
-    waterline.loadCollection(Ride);
-    waterline.loadCollection(Constructor);
-    waterline.loadCollection(BreakDown);
-    waterline.loadCollection(Department);
+    offshore.loadCollection(Company);
+    offshore.loadCollection(Driver);
+    offshore.loadCollection(Taxi);
+    offshore.loadCollection(Address);
+    offshore.loadCollection(Ride);
+    offshore.loadCollection(Constructor);
+    offshore.loadCollection(BreakDown);
+    offshore.loadCollection(Department);
 
     var connections = {'pop_deep': {
         adapter: 'adapter'}
     };
 
-    waterline.initialize({adapters: {adapter: require('sails-memory')}, connections: connections}, function (err, colls) {
+    offshore.initialize({adapters: {adapter: require('sails-memory')}, connections: connections}, function (err, colls) {
       if (err)
         return done(err);
 

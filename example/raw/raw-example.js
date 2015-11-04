@@ -2,7 +2,7 @@
  * Module dependencies
  */
 
-var setupWaterline = require('./bootstrap');
+var setupOffshore = require('./bootstrap');
 
 
 
@@ -11,7 +11,7 @@ var setupWaterline = require('./bootstrap');
  * Do stuff.
  */
 
-setupWaterline({
+setupOffshore({
   adapters: {
     'sails-disk': require('sails-disk')
   },
@@ -26,7 +26,7 @@ setupWaterline({
       adapter: 'sails-disk'
     }
   }
-}, function waterlineReady (err, ontology) {
+}, function offshoreReady (err, ontology) {
   if (err) throw err;
 
   // Our collections (i.e. models):

@@ -8,7 +8,7 @@ The current build status, immediate-term plans, and future goals of this reposit
 >
 > Before editing this file, please check out [How To Contribute to ROADMAP.md](https://gist.github.com/mikermcneil/bdad2108f3d9a9a5c5ed)- it's a quick read :)
 >
-> Also take a second to check that your feature request is relevant to Waterline core and not one of its dependencies (e.g. waterline-schema, one of its adapters, etc.)  If you aren't sure, feel free to send the PR here and someone will make sure it finds its way to the right place.
+> Also take a second to check that your feature request is relevant to Offshore core and not one of its dependencies (e.g. offshore-schema, one of its adapters, etc.)  If you aren't sure, feel free to send the PR here and someone will make sure it finds its way to the right place.
 
 
 
@@ -16,8 +16,8 @@ The current build status, immediate-term plans, and future goals of this reposit
 
 | Release                                                                                                                 | Install Command                                                | Build Status
 |------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------- | -----------------
-| [![NPM version](https://badge.fury.io/js/waterline.png)](https://github.com/balderdashy/waterline/tree/stable) _(stable)_       | `npm install waterline`                                          | [![Build Status](https://travis-ci.org/balderdashy/waterline.png?branch=stable)](https://travis-ci.org/balderdashy/waterline) |
-| [edge](https://github.com/balderdashy/waterline/tree/master)                                                                | `npm install waterline@git://github.com/balderdashy/waterline.git` | [![Build Status](https://travis-ci.org/balderdashy/waterline.png?branch=master)](https://travis-ci.org/balderdashy/waterline) |
+| [![NPM version](https://badge.fury.io/js/offshore.png)](https://github.com/balderdashy/offshore/tree/stable) _(stable)_       | `npm install offshore`                                          | [![Build Status](https://travis-ci.org/balderdashy/offshore.png?branch=stable)](https://travis-ci.org/balderdashy/offshore) |
+| [edge](https://github.com/balderdashy/offshore/tree/master)                                                                | `npm install offshore@git://github.com/balderdashy/offshore.git` | [![Build Status](https://travis-ci.org/balderdashy/offshore.png?branch=master)](https://travis-ci.org/balderdashy/offshore) |
 
 
 

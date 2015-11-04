@@ -1,15 +1,15 @@
-var Waterline = require('../../lib/waterline'),
+var Offshore = require('../../lib/offshore'),
     assert = require('assert');
 
-describe('Waterline Collection', function() {
+describe('Offshore Collection', function() {
 
   describe('basic fixture', function() {
-    var waterline = new Waterline(),
+    var offshore = new Offshore(),
         Model = require('./fixtures/model.fixture'),
         User;
 
     before(function(done) {
-      waterline.loadCollection(Model);
+      offshore.loadCollection(Model);
 
       var connections = {
         'my_foo': {
@@ -17,7 +17,7 @@ describe('Waterline Collection', function() {
         }
       };
 
-      waterline.initialize({ adapters: { foobar: {} }, connections: connections }, function(err, colls) {
+      offshore.initialize({ adapters: { foobar: {} }, connections: connections }, function(err, colls) {
         if(err) return done(err);
         User = colls.collections.test;
         done();
@@ -44,7 +44,7 @@ describe('Waterline Collection', function() {
       });
 
       // TO-DO
-      // Validate properties using Anchor with the Validator in waterline
+      // Validate properties using Offshore-validator with the Validator in offshore
 
     });
 
@@ -53,11 +53,11 @@ describe('Waterline Collection', function() {
   describe('custom fixtures', function() {
 
     describe('lowercase type', function() {
-      var waterline = new Waterline(),
+      var offshore = new Offshore(),
           User;
 
       before(function(done) {
-        var Model = Waterline.Collection.extend({
+        var Model = Offshore.Collection.extend({
           tableName: 'lowercaseType',
           connection: 'my_foo',
           attributes: {
@@ -65,7 +65,7 @@ describe('Waterline Collection', function() {
           }
         });
 
-        waterline.loadCollection(Model);
+        offshore.loadCollection(Model);
 
         var connections = {
           'my_foo': {
@@ -73,7 +73,7 @@ describe('Waterline Collection', function() {
           }
         };
 
-        waterline.initialize({ adapters: { foobar: {} }, connections: connections }, function(err, colls) {
+        offshore.initialize({ adapters: { foobar: {} }, connections: connections }, function(err, colls) {
           if(err) return done(err);
           User = colls.collections.lowercasetype;
           done();
@@ -90,11 +90,11 @@ describe('Waterline Collection', function() {
     });
 
     describe('uppercase type', function() {
-      var waterline = new Waterline(),
+      var offshore = new Offshore(),
           User;
 
       before(function(done) {
-        var Model = Waterline.Collection.extend({
+        var Model = Offshore.Collection.extend({
           tableName: 'uppercaseType',
           connection: 'my_foo',
           attributes: {
@@ -102,7 +102,7 @@ describe('Waterline Collection', function() {
           }
         });
 
-        waterline.loadCollection(Model);
+        offshore.loadCollection(Model);
 
         var connections = {
           'my_foo': {
@@ -110,7 +110,7 @@ describe('Waterline Collection', function() {
           }
         };
 
-        waterline.initialize({ adapters: { foobar: {} }, connections: connections }, function(err, colls) {
+        offshore.initialize({ adapters: { foobar: {} }, connections: connections }, function(err, colls) {
           if(err) return done(err);
           User = colls.collections.uppercasetype;
           done();

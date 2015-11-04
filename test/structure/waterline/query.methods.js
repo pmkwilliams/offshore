@@ -1,4 +1,4 @@
-var Collection = require('../../../lib/waterline/collection'),
+var Collection = require('../../../lib/offshore/collection'),
     assert = require('assert');
 
 describe('Collection', function() {

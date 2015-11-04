@@ -1,4 +1,4 @@
-var Waterline = require('../../../lib/waterline'),
+var Offshore = require('../../../lib/offshore'),
     assert = require('assert');
 
 describe('.afterValidate()', function() {
@@ -7,8 +7,8 @@ describe('.afterValidate()', function() {
     var person;
 
     before(function(done) {
-      var waterline = new Waterline();
-      var Model = Waterline.Collection.extend({
+      var offshore = new Offshore();
+      var Model = Offshore.Collection.extend({
         identity: 'user',
         connection: 'foo',
         attributes: {
@@ -21,7 +21,7 @@ describe('.afterValidate()', function() {
         }
       });
 
-      waterline.loadCollection(Model);
+      offshore.loadCollection(Model);
 
       // Fixture Adapter Def
       var adapterDef = {
@@ -35,7 +35,7 @@ describe('.afterValidate()', function() {
         }
       };
 
-      waterline.initialize({ adapters: { foobar: adapterDef }, connections: connections }, function(err, colls) {
+      offshore.initialize({ adapters: { foobar: adapterDef }, connections: connections }, function(err, colls) {
         if(err) done(err);
         person = colls.collections.user;
         done();
@@ -67,8 +67,8 @@ describe('.afterValidate()', function() {
     var person;
 
     before(function(done) {
-      var waterline = new Waterline();
-      var Model = Waterline.Collection.extend({
+      var offshore = new Offshore();
+      var Model = Offshore.Collection.extend({
         identity: 'user',
         connection: 'foo',
         attributes: {
@@ -90,7 +90,7 @@ describe('.afterValidate()', function() {
         ]
       });
 
-      waterline.loadCollection(Model);
+      offshore.loadCollection(Model);
 
       // Fixture Adapter Def
       var adapterDef = {
@@ -104,7 +104,7 @@ describe('.afterValidate()', function() {
         }
       };
 
-      waterline.initialize({ adapters: { foobar: adapterDef }, connections: connections }, function(err, colls) {
+      offshore.initialize({ adapters: { foobar: adapterDef }, connections: connections }, function(err, colls) {
         if(err) done(err);
         person = colls.collections.user;
         done();

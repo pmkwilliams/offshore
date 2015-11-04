@@ -1,13 +1,13 @@
 {
-  "name": "waterline",
+  "name": "offshore",
   "version": "0.10.0b",
-  "homepage": "https://github.com/balderdashy/waterline",
+  "homepage": "https://github.com/balderdashy/offshore",
   "authors": [
     "Cody Stoltman <@particlebanana>",
     "Mike McNeil <@mikermcneil>"
   ],
   "description": "JavaScript ORM for the browser and Node.js",
-  "main": ".dist/waterline.min.js",
+  "main": ".dist/offshore.min.js",
   "keywords": [
     "orm",
     "models",
