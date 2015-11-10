@@ -269,7 +269,7 @@ describe('Populate Deep', function () {
         adapter: 'adapter'}
     };
 
-    offshore.initialize({adapters: {adapter: require('sails-memory')}, connections: connections}, function (err, colls) {
+    offshore.initialize({adapters: {adapter: require('offshore-memory')}, connections: connections}, function (err, colls) {
       if (err)
         return done(err);
 

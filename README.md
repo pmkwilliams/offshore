@@ -33,7 +33,7 @@ var User = Offshore.Collection.extend({
 
     lastName: {
       type: 'string',
-      required: true,
+      required: true
     }
   }
 });
@@ -543,7 +543,7 @@ With Offshore you can associate models with other models across all data stores.
 your users can live in PostgreSQL and their photos can live in MongoDB and you can interact with
 the data as if they lived together on the same database. You can also have associations that
 live on seperate connections or in different databases within the same adapter. Read more about
-associations [here](https://github.com/balderdashy/offshore-docs/blob/master/associations.md).
+associations [here](https://github.com/balderdashy/offshore-docs/blob/master/models/associations/associations.md).
 
 ## Tests
 

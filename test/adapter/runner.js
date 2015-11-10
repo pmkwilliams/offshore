@@ -4,7 +4,7 @@
 var util = require('util');
 var mocha = require('mocha');
 
-var adapterName = 'sails-memory';
+var adapterName = 'offshore-memory';
 var TestRunner = require('offshore-adapter-tests');
 var Adapter = require(adapterName);
 
@@ -22,7 +22,7 @@ try {
 catch (e) {
     throw new Error(
     '\n'+
-    'Could not read supported interfaces from "sails-adapter"."interfaces"'+'\n' +
+    'Could not read supported interfaces from "offshore-adapter"."interfaces"'+'\n' +
     'in this adapter\'s `package.json` file ::' + '\n' +
     util.inspect(e)
     );
@@ -35,9 +35,6 @@ catch (e) {
 console.info('Testing `' + package.name + '`, a Sails adapter.');
 console.info('Running `offshore-adapter-tests` against ' + interfaces.length + ' interfaces...');
 console.info('( ' + interfaces.join(', ') + ' )');
-console.log();
-console.log('Latest draft of Offshore adapter interface spec:');
-console.info('https://github.com/balderdashy/sails-docs/blob/master/contributing/adapter-specification.md');
 console.log();
 
 
@@ -87,13 +84,10 @@ new TestRunner({
     // implementation will always be used for cross-adapter / cross-connection
     // joins.
     // 
-    // In future versions of Sails/Offshore, 'queryable' may be also
+    // In future versions of Offshore, 'queryable' may be also
     // be polyfilled by core.
     // 
     // These polyfilled implementations can usually be further optimized at the
     // adapter level, since most databases provide optimizations for internal
     // operations.
-    // 
-    // Full interface reference:
-    // https://github.com/balderdashy/sails-docs/blob/master/contributing/adapter-specification.md
 });

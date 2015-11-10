@@ -1,7 +1,7 @@
 {
   "name": "offshore",
-  "version": "0.10.0b",
-  "homepage": "https://github.com/balderdashy/offshore",
+  "version": "0.0.1",
+  "homepage": "https://github.com/Atlantis-Software/offshore",
   "authors": [
     "Cody Stoltman <@particlebanana>",
     "Mike McNeil <@mikermcneil>"
@@ -12,8 +12,7 @@
     "orm",
     "models",
     "collections",
-    "mvc",
-    "sails"
+    "mvc"
   ],
   "license": "MIT",
   "ignore": [
