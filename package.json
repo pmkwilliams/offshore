@@ -28,8 +28,8 @@
     "istanbul": "~0.3.14",
     "should": "~6.0.3",
     "offshore-memory": "~0.0.1",
-    "offshore-adapter-tests": "~0.0.1"
-    "mocha": "~2.2.5",
+    "offshore-adapter-tests": "~0.0.1",
+    "mocha": "~2.2.5"
   },
   "keywords": [
     "mvc",
