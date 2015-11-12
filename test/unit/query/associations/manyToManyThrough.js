@@ -1,4 +1,4 @@
-var Waterline = require('../../../../lib/waterline'),
+var Offshore = require('../../../../lib/offshore'),
     assert = require('assert'),
     async = require('async');
 
@@ -9,7 +9,7 @@ describe('Collection Query', function() {
 
     before(function(done) {
 
-      var waterline = new Waterline();
+      var offshore = new Offshore();
       var collections = {};
 
       collections.user = Waterline.Collection.extend({
@@ -61,9 +61,9 @@ describe('Collection Query', function() {
         }
       });
 
-      waterline.loadCollection(collections.user);
-      waterline.loadCollection(collections.drive);
-      waterline.loadCollection(collections.car);
+      offshore.loadCollection(collections.user);
+      offshore.loadCollection(collections.drive);
+      offshore.loadCollection(collections.car);
 
       var connections = {
         'foo': {
@@ -71,7 +71,7 @@ describe('Collection Query', function() {
         }
       };
 
-      waterline.initialize({adapters: {adapter: require('sails-memory')}, connections: connections }, function(err, colls) {
+      offshore.initialize({adapters: {adapter: require('sails-memory')}, connections: connections }, function(err, colls) {
         if(err) done(err);
         User = colls.collections.user;
         Drive = colls.collections.drive;
