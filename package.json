@@ -1,7 +1,7 @@
 {
   "name": "offshore",
   "description": "An ORM for Node.js",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "contributors": [
     {
       "name": "Alexandre Tiertant",
@@ -17,7 +17,7 @@
     "switchback": "~2.0.0",
     "prompt": "~0.2.14",
     "offshore-criteria": "~0.0.1",
-    "offshore-schema": "~0.0.1"
+    "offshore-schema": "~0.0.2"
   },
   "devDependencies": {
     "codeclimate-test-reporter": "0.0.4",
@@ -27,8 +27,8 @@
     "eslint-nibble": "^0.1.1",
     "istanbul": "~0.3.14",
     "should": "~6.0.3",
-    "offshore-memory": "~0.0.1",
-    "offshore-adapter-tests": "~0.0.1",
+    "offshore-memory": "~0.0.2",
+    "offshore-adapter-tests": "~0.0.2",
     "mocha": "~2.2.5"
   },
   "keywords": [
