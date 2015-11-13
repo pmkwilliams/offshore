@@ -12,7 +12,7 @@ describe('Collection Query', function() {
       var offshore = new Offshore();
       var collections = {};
 
-      collections.user = Waterline.Collection.extend({
+      collections.user = Offshore.Collection.extend({
         identity: 'user',
         connection: 'foo',
         attributes: {
@@ -28,7 +28,7 @@ describe('Collection Query', function() {
         }
       });
 
-      collections.drive = Waterline.Collection.extend({
+      collections.drive = Offshore.Collection.extend({
         identity: 'drive',
         connection: 'foo',
         attributes: {
@@ -45,7 +45,7 @@ describe('Collection Query', function() {
         }
       });
 
-      collections.car = Waterline.Collection.extend({
+      collections.car = Offshore.Collection.extend({
         identity: 'car',
         connection: 'foo',
         attributes: {
@@ -71,7 +71,7 @@ describe('Collection Query', function() {
         }
       };
 
-      offshore.initialize({adapters: {adapter: require('sails-memory')}, connections: connections }, function(err, colls) {
+      offshore.initialize({adapters: {adapter: require('offshore-memory')}, connections: connections }, function(err, colls) {
         if(err) done(err);
         User = colls.collections.user;
         Drive = colls.collections.drive;

@@ -171,7 +171,7 @@ describe('Collection Query', function() {
       before(function(done) {
 
         var offshore = new Offshore();
-        var Model = Waterline.Collection.extend({
+        var Model = Offshore.Collection.extend({
           identity: 'user',
           connection: 'foo',
 
