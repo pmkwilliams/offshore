@@ -16,8 +16,6 @@ The current build status, immediate-term plans, and future goals of this reposit
 
 | Release                                                                                                                 | Install Command                                                | Build Status
 |------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------- | -----------------
-| [![NPM version](https://badge.fury.io/js/offshore.png)](https://github.com/balderdashy/offshore/tree/stable) _(stable)_       | `npm install offshore`                                          | [![Build Status](https://travis-ci.org/balderdashy/offshore.png?branch=stable)](https://travis-ci.org/balderdashy/offshore) |
-| [edge](https://github.com/balderdashy/offshore/tree/master)                                                                | `npm install offshore@git://github.com/balderdashy/offshore.git` | [![Build Status](https://travis-ci.org/balderdashy/offshore.png?branch=master)](https://travis-ci.org/balderdashy/offshore) |
 
 
 

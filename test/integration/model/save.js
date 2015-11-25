@@ -47,7 +47,7 @@ describe('Model', function() {
         }
       });
 
-      var Car = Waterline.Collection.extend({
+      var Car = Offshore.Collection.extend({
         connection: 'my_foo',
         tableName: 'car',
         attributes: {

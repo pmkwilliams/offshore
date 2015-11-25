@@ -1,4 +1,4 @@
-var Waterline = require('../../../../lib/waterline');
+var Offshore = require('../../../../lib/offshore');
 var assert = require('assert');
 var async = require('async');
 
@@ -12,10 +12,10 @@ describe('Collection Query', function () {
 
     before(function (done) {
 
-      var waterline = new Waterline();
+      var offshore = new Offshore();
       var collections = {};
 
-      collections.payment = Waterline.Collection.extend({
+      collections.payment = Offshore.Collection.extend({
         identity: 'Payment',
         connection: 'foo',
         tableName: 'payment_table',
@@ -34,7 +34,7 @@ describe('Collection Query', function () {
         }
       });
 
-      collections.driver = Waterline.Collection.extend({
+      collections.driver = Offshore.Collection.extend({
         identity: 'Driver',
         connection: 'foo',
         tableName: 'driver_table',
@@ -58,7 +58,7 @@ describe('Collection Query', function () {
         }
       });
 
-      collections.taxi = Waterline.Collection.extend({
+      collections.taxi = Offshore.Collection.extend({
         identity: 'Taxi',
         connection: 'foo',
         tableName: 'taxi_table',
@@ -78,7 +78,7 @@ describe('Collection Query', function () {
         }
       });
 
-      collections.ride = Waterline.Collection.extend({
+      collections.ride = Offshore.Collection.extend({
         identity: 'Ride',
         connection: 'foo',
         tableName: 'ride_table',
@@ -99,10 +99,10 @@ describe('Collection Query', function () {
         }
       });
 
-      waterline.loadCollection(collections.payment);
-      waterline.loadCollection(collections.driver);
-      waterline.loadCollection(collections.taxi);
-      waterline.loadCollection(collections.ride);
+      offshore.loadCollection(collections.payment);
+      offshore.loadCollection(collections.driver);
+      offshore.loadCollection(collections.taxi);
+      offshore.loadCollection(collections.ride);
 
       var connections = {
         'foo': {
@@ -110,7 +110,7 @@ describe('Collection Query', function () {
         }
       };
 
-      waterline.initialize({adapters: {adapter: require('sails-memory')}, connections: connections}, function(err, colls) {
+      offshore.initialize({adapters: {adapter: require('offshore-memory')}, connections: connections}, function(err, colls) {
         if (err) {
           done(err);
         }
