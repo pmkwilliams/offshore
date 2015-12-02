@@ -1,7 +1,7 @@
 var _ = require('lodash'),
     assert = require('assert'),
     belongsToFixture = require('../../support/fixtures/model/context.belongsTo.fixture'),
-    Model = require('../../../lib/waterline/model');
+    Model = require('../../../lib/offshore/model');
 
 describe('instance methods', function() {
   describe('hasMany association add', function() {
@@ -63,9 +63,9 @@ describe('instance methods', function() {
         // Add Collection Methods to all fixture collections
         fixture.update = updateFn(foo);
         fixture.findOne = findOneFn(foo);
-        fixture.waterline.collections.foo.update = updateFn(foo);
-        fixture.waterline.collections.bar.update = updateFn(bar);
-        fixture.waterline.collections.bar.create = createFn(bar);
+        fixture.offshore.collections.foo.update = updateFn(foo);
+        fixture.offshore.collections.bar.update = updateFn(bar);
+        fixture.offshore.collections.bar.create = createFn(bar);
 
         model = new Model(fixture, {});
       });

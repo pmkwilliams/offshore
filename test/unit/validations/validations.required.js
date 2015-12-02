@@ -1,4 +1,4 @@
-var Validator = require('../../../lib/waterline/core/validations'),
+var Validator = require('../../../lib/offshore/core/validations'),
     assert = require('assert');
 
 describe('validations', function() {

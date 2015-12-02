@@ -1,4 +1,4 @@
-var Waterline = require('../../../../lib/waterline'),
+var Offshore = require('../../../../lib/offshore'),
     assert = require('assert');
 
 describe('Core Schema', function() {
@@ -7,9 +7,9 @@ describe('Core Schema', function() {
     var person;
 
     before(function(done) {
-      var waterline = new Waterline();
+      var offshore = new Offshore();
 
-      var Person = Waterline.Collection.extend({
+      var Person = Offshore.Collection.extend({
         identity: 'person',
         connection: 'foo',
         attributes: {
@@ -18,7 +18,7 @@ describe('Core Schema', function() {
         }
       });
 
-      waterline.loadCollection(Person);
+      offshore.loadCollection(Person);
 
       var connections = {
         'foo': {
@@ -26,7 +26,7 @@ describe('Core Schema', function() {
         }
       };
 
-      waterline.initialize({ adapters: { foobar: {} }, connections: connections }, function(err, colls) {
+      offshore.initialize({ adapters: { foobar: {} }, connections: connections }, function(err, colls) {
         if(err) return done(err);
         person = colls.collections.person;
         done();

@@ -1,4 +1,4 @@
-var Waterline = require('../../../lib/waterline'),
+var Offshore = require('../../../lib/offshore'),
     assert = require('assert');
 
 describe('Collection Query', function() {
@@ -10,8 +10,8 @@ describe('Collection Query', function() {
 
       before(function(done) {
 
-        var waterline = new Waterline();
-        var Model = Waterline.Collection.extend({
+        var offshore = new Offshore();
+        var Model = Offshore.Collection.extend({
           identity: 'user',
           connection: 'foo',
           attributes: {
@@ -35,7 +35,7 @@ describe('Collection Query', function() {
           }
         });
 
-        waterline.loadCollection(Model);
+        offshore.loadCollection(Model);
 
         // Fixture Adapter Def
         var adapterDef = { create: function(con, col, values, cb) { return cb(null, values); }};
@@ -46,7 +46,7 @@ describe('Collection Query', function() {
           }
         };
 
-        waterline.initialize({ adapters: { foobar: adapterDef }, connections: connections }, function(err, colls) {
+        offshore.initialize({ adapters: { foobar: adapterDef }, connections: connections }, function(err, colls) {
           if(err) done(err);
           query = colls.collections.user;
           done();
@@ -62,6 +62,14 @@ describe('Collection Query', function() {
 
       it('should set default values when function', function(done) {
         query.create({}, function(err, status) {
+          assert(status.full === 'Foo Bar');
+          done();
+        });
+      });
+
+      it('should set default values when the value is undefined', function(done) {
+        query.create({ first: undefined }, function(err, status) {
+          assert(status.first = 'Foo');
           assert(status.full === 'Foo Bar');
           done();
         });
@@ -108,13 +116,13 @@ describe('Collection Query', function() {
 
     });
 
-    describe('override auto values', function() {
+    describe('override and disable auto values', function() {
       var query;
 
       before(function(done) {
 
-        var waterline = new Waterline();
-        var Model = Waterline.Collection.extend({
+        var offshore = new Offshore();
+        var Model = Offshore.Collection.extend({
           identity: 'user',
           connection: 'foo',
 
@@ -130,7 +138,7 @@ describe('Collection Query', function() {
           }
         });
 
-        waterline.loadCollection(Model);
+        offshore.loadCollection(Model);
 
         // Fixture Adapter Def
         var adapterDef = { create: function(con, col, values, cb) { return cb(null, values); }};
@@ -141,7 +149,7 @@ describe('Collection Query', function() {
           }
         };
 
-        waterline.initialize({ adapters: { foobar: adapterDef }, connections: connections }, function(err, colls) {
+        offshore.initialize({ adapters: { foobar: adapterDef }, connections: connections }, function(err, colls) {
           if(err) return done(err);
           query = colls.collections.user;
           done();
@@ -157,23 +165,29 @@ describe('Collection Query', function() {
       });
     });
 
-    describe('cast proper values', function() {
+    describe('override auto values with custom names', function() {
       var query;
 
       before(function(done) {
 
-        var waterline = new Waterline();
-        var Model = Waterline.Collection.extend({
+        var offshore = new Offshore();
+        var Model = Offshore.Collection.extend({
           identity: 'user',
           connection: 'foo',
 
+          autoCreatedAt: "customCreatedAt",
+          autoUpdatedAt: "customUpdatedAt",
+
           attributes: {
-            name: 'string',
-            age: 'integer'
+            name: {
+              type: 'string',
+              defaultsTo: 'Foo Bar'
+            },
+            doSomething: function() {}
           }
         });
 
-        waterline.loadCollection(Model);
+        offshore.loadCollection(Model);
 
         // Fixture Adapter Def
         var adapterDef = { create: function(con, col, values, cb) { return cb(null, values); }};
@@ -184,7 +198,52 @@ describe('Collection Query', function() {
           }
         };
 
-        waterline.initialize({ adapters: { foobar: adapterDef }, connections: connections }, function(err, colls) {
+        offshore.initialize({ adapters: { foobar: adapterDef }, connections: connections }, function(err, colls) {
+          if(err) return done(err);
+          query = colls.collections.user;
+          done();
+        });
+      });
+
+      it('should add timestamps with a custom name', function(done) {
+        query.create({}, function(err, status) {
+          assert(!status.createdAt);
+          assert(!status.updatedAt);
+          assert(status.customCreatedAt);
+          assert(status.customUpdatedAt);
+          done();
+        });
+      });
+    });
+
+    describe('cast proper values', function() {
+      var query;
+
+      before(function(done) {
+
+        var offshore = new Offshore();
+        var Model = Offshore.Collection.extend({
+          identity: 'user',
+          connection: 'foo',
+
+          attributes: {
+            name: 'string',
+            age: 'integer'
+          }
+        });
+
+        offshore.loadCollection(Model);
+
+        // Fixture Adapter Def
+        var adapterDef = { create: function(con, col, values, cb) { return cb(null, values); }};
+
+        var connections = {
+          'foo': {
+            adapter: 'foobar'
+          }
+        };
+
+        offshore.initialize({ adapters: { foobar: adapterDef }, connections: connections }, function(err, colls) {
           if(err) return done(err);
           query = colls.collections.user;
           done();
@@ -206,8 +265,8 @@ describe('Collection Query', function() {
 
       before(function(done) {
 
-        var waterline = new Waterline();
-        var Model = Waterline.Collection.extend({
+        var offshore = new Offshore();
+        var Model = Offshore.Collection.extend({
           identity: 'user',
           connection: 'foo',
           schema: false,
@@ -215,7 +274,7 @@ describe('Collection Query', function() {
           attributes: {}
         });
 
-        waterline.loadCollection(Model);
+        offshore.loadCollection(Model);
 
         // Fixture Adapter Def
         var adapterDef = { create: function(con, col, values, cb) { return cb(null, values); }};
@@ -226,7 +285,7 @@ describe('Collection Query', function() {
           }
         };
 
-        waterline.initialize({ adapters: { foobar: adapterDef }, connections: connections }, function(err, colls) {
+        offshore.initialize({ adapters: { foobar: adapterDef }, connections: connections }, function(err, colls) {
           if(err) return done(err);
           query = colls.collections.user;
           done();

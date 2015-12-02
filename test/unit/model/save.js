@@ -1,6 +1,6 @@
 var assert = require('assert'),
     belongsToFixture = require('../../support/fixtures/model/context.belongsTo.fixture'),
-    Model = require('../../../lib/waterline/model');
+    Model = require('../../../lib/offshore/model');
 
 describe('instance methods', function() {
   describe('save', function() {

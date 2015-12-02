@@ -1,4 +1,4 @@
-var Waterline = require('../../../lib/waterline'),
+var Offshore = require('../../../lib/offshore'),
     assert = require('assert');
 
 describe('Collection Query', function() {
@@ -11,7 +11,7 @@ describe('Collection Query', function() {
       before(function() {
 
         // Extend for testing purposes
-        Model = Waterline.Collection.extend({
+        Model = Offshore.Collection.extend({
           identity: 'user',
           connection: 'foo',
 
@@ -26,8 +26,8 @@ describe('Collection Query', function() {
 
       it('should transform values before sending to adapter', function(done) {
 
-        var waterline = new Waterline();
-        waterline.loadCollection(Model);
+        var offshore = new Offshore();
+        offshore.loadCollection(Model);
 
         // Fixture Adapter Def
         var adapterDef = {
@@ -43,7 +43,7 @@ describe('Collection Query', function() {
           }
         };
 
-        waterline.initialize({ adapters: { foobar: adapterDef }, connections: connections }, function(err, colls) {
+        offshore.initialize({ adapters: { foobar: adapterDef }, connections: connections }, function(err, colls) {
           if(err) return done(err);
           colls.collections.user.findOrCreateEach([{ where: { name: 'foo' }}], [{ name: 'foo' }], done);
         });
@@ -51,8 +51,8 @@ describe('Collection Query', function() {
 
       it('should transform values after receiving from adapter', function(done) {
 
-        var waterline = new Waterline();
-        waterline.loadCollection(Model);
+        var offshore = new Offshore();
+        offshore.loadCollection(Model);
 
         // Fixture Adapter Def
         var adapterDef = {
@@ -68,7 +68,7 @@ describe('Collection Query', function() {
           }
         };
 
-        waterline.initialize({ adapters: { foobar: adapterDef }, connections: connections }, function(err, colls) {
+        offshore.initialize({ adapters: { foobar: adapterDef }, connections: connections }, function(err, colls) {
           if(err) return done(err);
           colls.collections.user.findOrCreateEach([{}], [{ name: 'foo' }], function(err, values) {
             assert(values[0].name);

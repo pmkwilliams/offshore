@@ -118,15 +118,15 @@ module.exports = function() {
 
 
   // Set context collections
-  context.waterline.collections = models;
+  context.offshore.collections = models;
 
   // Set collection attributes
   context._attributes = models.foo.attributes;
   context.attributes = context._attributes;
-  context.waterline.connections = context.connections;
+  context.offshore.connections = context.connections;
 
-  // Build Up Waterline Schema
-  context.waterline.schema.foo = {
+  // Build Up Offshore Schema
+  context.offshore.schema.foo = {
     identity: 'foo',
     connection: 'my_foo',
     attributes: {
@@ -154,7 +154,7 @@ module.exports = function() {
     }
   };
 
-  context.waterline.schema.bar = {
+  context.offshore.schema.bar = {
     identity: 'bar',
     connection: 'my_foo',
     attributes: {
@@ -175,7 +175,7 @@ module.exports = function() {
     }
   };
 
-  context.waterline.schema.baz = {
+  context.offshore.schema.baz = {
     identity: 'baz',
     connection: 'my_foo',
     attributes: {
@@ -195,7 +195,7 @@ module.exports = function() {
     }
   };
 
-  context.waterline.schema.bar_foos__foo_bars = {
+  context.offshore.schema.bar_foos__foo_bars = {
     identity: 'bar_foos__foo_bars',
     connection: 'my_foo',
     tables: ['bar', 'foo'],

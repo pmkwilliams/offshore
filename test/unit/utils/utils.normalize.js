@@ -1,5 +1,5 @@
 var assert = require('assert'),
-    normalize = require('../../../lib/waterline/utils/normalize');
+    normalize = require('../../../lib/offshore/utils/normalize');
 
 describe("Normalize utility", function() {
 

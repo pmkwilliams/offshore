@@ -1,4 +1,4 @@
-var utils = require('../../../lib/waterline/utils/schema'),
+var utils = require('../../../lib/offshore/utils/schema'),
     assert = require('assert');
 
 describe('Schema utilities', function() {

@@ -1,10 +1,10 @@
-var Waterline = require('../../../lib/waterline');
+var Offshore = require('../../../lib/offshore');
 var assert = require('assert');
 var _ = require('lodash');
 
 describe('Alter Mode Recovery with buffer attributes', function () {
 
-  var waterline;
+  var offshore;
   var adapters;
   var connections;
   var inserted;
@@ -76,7 +76,7 @@ describe('Alter Mode Recovery with buffer attributes', function () {
       }
     };
 
-    waterline = new Waterline();
+    offshore = new Offshore();
 
     // Build up a model to test
     PersonModel = {
@@ -112,9 +112,9 @@ describe('Alter Mode Recovery with buffer attributes', function () {
 
 
   it('should recover data', function (done) {
-    var PersonCollection = Waterline.Collection.extend(PersonModel);
-    waterline.loadCollection(PersonCollection);
-    waterline.initialize({adapters: adapters, connections: connections}, function (err, data) {
+    var PersonCollection = Offshore.Collection.extend(PersonModel);
+    offshore.loadCollection(PersonCollection);
+    offshore.initialize({adapters: adapters, connections: connections}, function (err, data) {
       if (err) {
         return done(err);
       }

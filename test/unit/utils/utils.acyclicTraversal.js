@@ -1,5 +1,5 @@
 var assert = require('assert'),
-    traverse = require('../../../lib/waterline/utils/acyclicTraversal');
+    traverse = require('../../../lib/offshore/utils/acyclicTraversal');
 
 describe('utils/acyclicTraversal', function() {
 

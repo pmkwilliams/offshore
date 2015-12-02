@@ -1,4 +1,4 @@
-var Waterline = require('../../../lib/waterline'),
+var Offshore = require('../../../lib/offshore'),
     assert = require('assert');
 
 describe('Collection Query', function() {
@@ -10,8 +10,8 @@ describe('Collection Query', function() {
 
       before(function (done) {
 
-        var waterline = new Waterline();
-        var User = Waterline.Collection.extend({
+        var offshore = new Offshore();
+        var User = Offshore.Collection.extend({
           identity: 'user',
           connection: 'foo',
           associationFinders: false,
@@ -23,7 +23,7 @@ describe('Collection Query', function() {
           }
         });
 
-        var Group = Waterline.Collection.extend({
+        var Group = Offshore.Collection.extend({
           identity: 'group',
           connection: 'foo',
           dynamicFinders: false,
@@ -32,8 +32,8 @@ describe('Collection Query', function() {
           }
         });
 
-        waterline.loadCollection(User);
-        waterline.loadCollection(Group);
+        offshore.loadCollection(User);
+        offshore.loadCollection(Group);
 
         var connections = {
           'foo': {
@@ -41,7 +41,7 @@ describe('Collection Query', function() {
           }
         };
 
-        waterline.initialize({ adapters: { foobar: {} }, connections: connections }, function(err, orm) {
+        offshore.initialize({ adapters: { foobar: {} }, connections: connections }, function(err, orm) {
           if (err) return done(err);
 
           collections = orm.collections;
@@ -64,8 +64,8 @@ describe('Collection Query', function() {
 
       before(function(done) {
 
-        var waterline = new Waterline();
-        var User = Waterline.Collection.extend({
+        var offshore = new Offshore();
+        var User = Offshore.Collection.extend({
           identity: 'user',
           connection: 'foo',
           attributes: {
@@ -76,7 +76,7 @@ describe('Collection Query', function() {
           }
         });
 
-        var Group = Waterline.Collection.extend({
+        var Group = Offshore.Collection.extend({
           identity: 'group',
           connection: 'foo',
           attributes: {
@@ -84,8 +84,8 @@ describe('Collection Query', function() {
           }
         });
 
-        waterline.loadCollection(User);
-        waterline.loadCollection(Group);
+        offshore.loadCollection(User);
+        offshore.loadCollection(Group);
 
         var connections = {
           'foo': {
@@ -93,7 +93,7 @@ describe('Collection Query', function() {
           }
         };
 
-        waterline.initialize({ adapters: { foobar: {} }, connections: connections }, function(err, colls) {
+        offshore.initialize({ adapters: { foobar: {} }, connections: connections }, function(err, colls) {
           if(err) return done(err);
           query = colls.collections.user;
           done();

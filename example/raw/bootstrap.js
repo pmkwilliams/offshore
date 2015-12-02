@@ -3,11 +3,11 @@
  */
 
 var _ = require('lodash')
-  , Waterline = require('../../lib/waterline');
+  , Offshore = require('../../lib/offshore');
 
 
 /**
- * Set up Waterline with the specified
+ * Set up Offshore with the specified
  * models, connections, and adapters.
 
   @param options
@@ -21,7 +21,7 @@ var _ = require('lodash')
       :: {Object} collections
       :: {Object} connections
 
-  @return {Waterline}
+  @return {Offshore}
  */
 
 module.exports = function bootstrap( options, cb ) {
@@ -45,26 +45,26 @@ module.exports = function bootstrap( options, cb ) {
     def.identity = def.identity || identity;
 
     // Fold object of collection definitions into an array
-    // of extended Waterline collections.
-    extendedCollections.push(Waterline.Collection.extend(def));
+    // of extended Offshore collections.
+    extendedCollections.push(Offshore.Collection.extend(def));
   });
 
 
-  // Instantiate Waterline and load the already-extended
-  // Waterline collections.
-  var waterline = new Waterline();
+  // Instantiate Offshore and load the already-extended
+  // Offshore collections.
+  var offshore = new Offshore();
   extendedCollections.forEach(function (collection) {
-    waterline.loadCollection(collection);
+    offshore.loadCollection(collection);
   });
 
 
-  // Initialize Waterline
+  // Initialize Offshore
   // (and tell it about our adapters)
-  waterline.initialize({
+  offshore.initialize({
     adapters: adapters,
     connections: connections
   }, cb);
 
-  return waterline;
+  return offshore;
 };
 
