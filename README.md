@@ -53,6 +53,14 @@ You may also supply an array of adapters and Offshore will map out the methods s
 
 #### Community Adapters
 
+  - [SQL](https://github.com/Atlantis-Software/offshore-sql)
+
+using waterline compatibility mode
+
+```javascript
+offshore.initialize({ compat: "waterline", ...
+```
+
   - [PostgreSQL](https://github.com/particlebanana/sails-postgresql) - *0.9+ compatible*
   - [MySQL](https://github.com/balderdashy/sails-mysql) - *0.9+ compatible*
   - [MongoDB](https://github.com/balderdashy/sails-mongo) - *0.9+ compatible*
