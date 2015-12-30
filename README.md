@@ -1,11 +1,42 @@
 
-Offshore is a brand new kind of storage and retrieval engine.
+Offshore is a fork of Waterline project.
 
 It provides a uniform API for accessing stuff from different kinds of databases, protocols, and 3rd party APIs. That means you write the same code to get and store things like users, whether they live in Redis, mySQL, LDAP, MongoDB, or Postgres.
 
 Offshore strives to inherit the best parts of ORMs like ActiveRecord, Hibernate, and Mongoose, but with a fresh perspective and emphasis on modularity, testability, and consistency across adapters.
 
 For detailed documentation, go to [Offshore Documentation](https://github.com/Atlantis-Software/offshore-docs) repository.
+
+## Why a fork?
+
+the Waterline project aims to correct his currently documented features.new features aren't integrated and there is no interaction with the core team, sailsbot has closed this discution...
+Offshore integrate early features that doesn't break others and no bot will mute this.
+
+## Roadmap
+
+###### Deep Populate
+recursively populate child assosiations
+- [x] spec
+- [x] code 
+- [x] unit tests  
+- [ ] doc
+- [x] merged
+
+###### Associations Criteria
+add default criteria to asociation [in Progress](https://github.com/Atlantis-Software/offshore/pull/8)
+- [ ] spec
+- [ ] code 
+- [ ] unit tests  
+- [ ] doc
+- [ ] merged
+
+###### Cache Mechanism
+add the ability to cache orm results [in Progress](https://github.com/Atlantis-Software/offshore/pull/7)
+- [ ] spec
+- [ ] code
+- [ ] unit tests
+- [ ] doc
+- [ ] merged
 
 ## Installation
 
