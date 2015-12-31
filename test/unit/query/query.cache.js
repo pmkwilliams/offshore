@@ -10,12 +10,12 @@ describe('Collection Query', function() {
 
       var offshore = new Offshore();
       var Model = Offshore.Collection.extend({
-        identity: 'user',
+        identity: 'random',
         connection: 'foo',
         attributes: {
-          name: {
-            type: 'string',
-            defaultsTo: 'Foo Bar'
+          number: {
+            type: 'integer',
+            defaultsTo: 1
           },
           doSomething: function() {}
         }
@@ -23,15 +23,10 @@ describe('Collection Query', function() {
 
       offshore.loadCollection(Model);
 
-      var first = true;
       // Fixture Adapter Def
       var adapterDef = { 
         find: function(con, col, criteria, cb) {
-          if (!first) {
-            return cb(new Error('should not call adapter.find a second time'));
-          }
-          first = false;
-          return cb(null, [{name: 'should be cached'}]);
+          return cb(null, [{number: Math.random() * 10000000000000000}]);
         }
       };
 
@@ -43,17 +38,41 @@ describe('Collection Query', function() {
 
       offshore.initialize({ adapters: { foobar: adapterDef }, connections: connections }, function(err, colls) {
         if(err) return done(err);
-        query = colls.collections.user;
+        query = colls.collections.random;
         done();
       });
     });
 
-    it('should cache results', function(done) {
-      query.find({}).cache('cache_test',10).exec(function(err, first_values) {
+    it('should cache results using user defined cacheKey and cacheTime', function(done) {
+      query.find({}).cache('cache_test', 10, function(err, first_values) {
         assert(!err);
-        query.find({}).cache('cache_test',10).exec(function(err, cached_values) {
+        query.find({}).cache('cache_test', 10, function(err, cached_values) {
           assert(!err);
-          assert(first_values[0].name === cached_values[0].name);
+          assert(first_values[0].number === cached_values[0].number);
+          done();
+        });
+      });
+    });
+
+    it('should cache results using user defined cacheTime and automatic cacheKey', function(done) {
+      var criteria = { number: [1,2] };
+      query.find(criteria).cache(10, function(err, first_values) {
+        assert(!err);
+        query.find(criteria).cache(10, function(err, cached_values) {
+          assert(!err);
+          assert(first_values[0].number === cached_values[0].number);
+          done();
+        });
+      });
+    });
+    
+    it('should cache results with only a callback given', function(done) {
+      var criteria = { number: 100 };
+      query.find(criteria).cache(function(err, first_values) {
+        assert(!err);
+        query.find(criteria).cache(function(err, cached_values) {
+          assert(!err);
+          assert(first_values[0].number === cached_values[0].number);
           done();
         });
       });
