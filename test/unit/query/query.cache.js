@@ -36,7 +36,7 @@ describe('Collection Query', function() {
         }
       };
 
-      offshore.initialize({ adapters: { foobar: adapterDef }, connections: connections }, function(err, colls) {
+      offshore.initialize({ adapters: { foobar: adapterDef }, connections: connections, cache: { prefix: 'test_cache_', defaultCacheTime: 100 } }, function(err, colls) {
         if(err) return done(err);
         query = colls.collections.random;
         done();
