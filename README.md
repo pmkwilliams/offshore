@@ -19,7 +19,7 @@ recursively populate child assosiations
 - [x] spec
 - [x] code 
 - [x] unit tests  
-- [ ] doc
+- [X] doc [offshore-docs](https://github.com/Atlantis-Software/offshore-docs/pull/1)
 - [x] merged
 
 ###### Associations Criteria
