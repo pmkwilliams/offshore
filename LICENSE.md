@@ -1,7 +1,7 @@
 The MIT License (MIT)
 --
 
-Copyright © 2012 Balderdash Design Co.
+Copyright © 2012-2016 Balderdash Design Co.
 
 Copyright © 2015 Atlantis Software
 

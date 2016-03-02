@@ -9,8 +9,7 @@ For detailed documentation, go to [Offshore Documentation](https://github.com/At
 
 ## Why a fork?
 
-the Waterline project aims to correct his currently documented features.new features aren't integrated and there is no interaction with the core team, sailsbot has closed this discution...
-Offshore integrate early features that doesn't break others and no bot will mute this.
+because it's the only way to integrate new features.
 
 ## Roadmap
 
