@@ -16,7 +16,7 @@
     "lodash": "3.10.1",
     "switchback": "2.0.0",
     "prompt": "0.2.14",
-    "offshore-criteria": "0.0.1",
+    "offshore-criteria": "0.0.2",
     "offshore-schema": "0.0.2"
   },
   "devDependencies": {
