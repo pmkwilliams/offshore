@@ -2,4 +2,6 @@ node_modules
 *.swp
 *.swo
 .dist
-/nbproject/private/
+nbproject/
+coverage/
+npm-debug.log
