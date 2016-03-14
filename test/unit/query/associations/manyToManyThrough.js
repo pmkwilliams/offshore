@@ -2,18 +2,18 @@ var Offshore = require('../../../../lib/offshore');
 var assert = require('assert');
 var async = require('async');
 
-describe('Collection Query', function () {
+describe('Collection Query', function() {
 
-  describe('many to many through association', function () {
+  describe('many to many through association', function() {
+    var offshore;
     var Driver;
     var Ride;
     var Taxi;
     var Payment;
 
-    before(function (done) {
-
-      var offshore = new Offshore();
+    before(function(done) {
       var collections = {};
+      offshore = new Offshore();
 
       collections.payment = Offshore.Collection.extend({
         identity: 'Payment',
@@ -157,6 +157,9 @@ describe('Collection Query', function () {
       });
     });
 
+    after(function(done) {
+      offshore.teardown(done);
+    });
 
     it('through table model associations should return a single objet', function(done) {
       Ride.findOne(1)

@@ -9,8 +9,7 @@ For detailed documentation, go to [Offshore Documentation](https://github.com/At
 
 ## Why a fork?
 
-the Waterline project aims to correct his currently documented features.new features aren't integrated and there is no interaction with the core team, sailsbot has closed this discution...
-Offshore integrate early features that doesn't break others and no bot will mute this.
+because it's the only way to integrate new features.
 
 ## Roadmap
 
@@ -19,7 +18,7 @@ recursively populate child assosiations
 - [x] spec
 - [x] code 
 - [x] unit tests  
-- [ ] doc
+- [X] doc [offshore-docs](https://github.com/Atlantis-Software/offshore-docs/pull/1)
 - [x] merged
 
 ###### Associations Criteria
@@ -84,7 +83,8 @@ You may also supply an array of adapters and Offshore will map out the methods s
 
 #### Community Adapters
 
-  - [SQL](https://github.com/Atlantis-Software/offshore-sql)
+  - [offshore-sql](https://github.com/Atlantis-Software/offshore-sql) mysql support and oracle in beta
+  - [offshore-memory](https://github.com/Atlantis-Software/offshore-memory)
 
 using waterline compatibility mode
 
