@@ -1,11 +1,41 @@
 
-Offshore is a brand new kind of storage and retrieval engine.
+Offshore is a fork of Waterline project.
 
 It provides a uniform API for accessing stuff from different kinds of databases, protocols, and 3rd party APIs. That means you write the same code to get and store things like users, whether they live in Redis, mySQL, LDAP, MongoDB, or Postgres.
 
 Offshore strives to inherit the best parts of ORMs like ActiveRecord, Hibernate, and Mongoose, but with a fresh perspective and emphasis on modularity, testability, and consistency across adapters.
 
 For detailed documentation, go to [Offshore Documentation](https://github.com/Atlantis-Software/offshore-docs) repository.
+
+## Why a fork?
+
+because it's the only way to integrate new features.
+
+## Roadmap
+
+###### Deep Populate
+recursively populate child assosiations
+- [x] spec
+- [x] code 
+- [x] unit tests  
+- [X] doc [offshore-docs](https://github.com/Atlantis-Software/offshore-docs/pull/1)
+- [x] merged
+
+###### Associations Criteria
+add default criteria to asociation [in Progress](https://github.com/Atlantis-Software/offshore/pull/8)
+- [ ] spec
+- [ ] code 
+- [ ] unit tests  
+- [ ] doc
+- [ ] merged
+
+###### Cache Mechanism
+add the ability to cache orm results [in Progress](https://github.com/Atlantis-Software/offshore/pull/7)
+- [ ] spec
+- [ ] code
+- [ ] unit tests
+- [ ] doc
+- [ ] merged
 
 ## Installation
 
@@ -53,7 +83,8 @@ You may also supply an array of adapters and Offshore will map out the methods s
 
 #### Community Adapters
 
-  - [SQL](https://github.com/Atlantis-Software/offshore-sql)
+  - [offshore-sql](https://github.com/Atlantis-Software/offshore-sql) mysql support and oracle in beta
+  - [offshore-memory](https://github.com/Atlantis-Software/offshore-memory)
 
 using waterline compatibility mode
 
