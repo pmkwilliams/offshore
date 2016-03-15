@@ -11,31 +11,15 @@ For detailed documentation, go to [Offshore Documentation](https://github.com/At
 
 because it's the only way to integrate new features.
 
-## Roadmap
+## Changelog
 
-###### Deep Populate
-recursively populate child assosiations
-- [x] spec
-- [x] code 
-- [x] unit tests  
-- [X] doc [offshore-docs](https://github.com/Atlantis-Software/offshore-docs/pull/1)
-- [x] merged
+ + [Deep Populate](https://github.com/Atlantis-Software/offshore-docs/blob/master/queries/query.md#populate)
+ + [Cache Mechanism](https://github.com/Atlantis-Software/offshore-docs/blob/master/queries/query.md#cache)
 
-###### Associations Criteria
-add default criteria to asociation [in Progress](https://github.com/Atlantis-Software/offshore/pull/8)
-- [ ] spec
-- [ ] code 
-- [ ] unit tests  
-- [ ] doc
-- [ ] merged
+## What's Next?
 
-###### Cache Mechanism
-add the ability to cache orm results [in Progress](https://github.com/Atlantis-Software/offshore/pull/7)
-- [ ] spec
-- [ ] code
-- [ ] unit tests
-- [ ] doc
-- [ ] merged
++ Associations Criteria (add default criteria to asociation [in Progress](https://github.com/Atlantis-Software/offshore/pull/8))
++ Transactions
 
 ## Installation
 
