@@ -15,10 +15,11 @@ because it's the only way to integrate new features.
 
  + [Deep Populate](https://github.com/Atlantis-Software/offshore-docs/blob/master/queries/query.md#populate)
  + [Cache Mechanism](https://github.com/Atlantis-Software/offshore-docs/blob/master/queries/query.md#cache)
+ + [Associations Criteria](https://github.com/Atlantis-Software/offshore-docs/blob/master/models/associations/criteria.md)
 
 ## What's Next?
 
-+ Associations Criteria (add default criteria to asociation [in Progress](https://github.com/Atlantis-Software/offshore/pull/8))
++ polymorphic associations
 + Transactions
 
 ## Installation
