@@ -30,7 +30,7 @@ var async = require('async');
 var offshore = new Offshore();
 var migrate = 'drop';
 
-describe('Populate Deep', function () {
+describe('Deep', function () {
   var companyModel, taxiModel, driverModel, rideModel, constructorModel, addressModel, breakDownModel, departmentModel, countryModel;
   before(function (done) {
     var Company = Offshore.Collection.extend({
@@ -391,7 +391,7 @@ describe('Populate Deep', function () {
             });
   });
 
-  it('should populate multiple branchs', function (done) {
+  it('should deeply populate multiple branchs', function (done) {
     companyModel.find().where({companyName: 'company 2'})
             .populate('drivers.taxis', {sort: {taxiId: 1}})
             .populate('drivers.address')
@@ -438,7 +438,7 @@ describe('Populate Deep', function () {
             });
   });
 
-  it('should populate nested collections', function (done) {
+  it('should deeply populate nested collections', function (done) {
     companyModel.find().where({companyId: 2})
             .populate('taxis')
             .populate('taxis.breakdowns')
@@ -450,7 +450,7 @@ describe('Populate Deep', function () {
             });
   });
 
-  it('findOne should return undefined if there is no results', function (done) {
+  it('findOne with populate deep should return undefined if there is no results', function (done) {
     companyModel.findOne().where({companyId: 999})
             .populate('taxis')
             .populate('taxis.breakdowns')
@@ -460,10 +460,20 @@ describe('Populate Deep', function () {
               done();
             });
   });
+
+  it('should find model using deep criteria', function (done) {
+    taxiModel.find({where: {constructor: {constructorName: 'constructor 1'}}}).populate('constructor').exec(function(err, taxis) {
+      assert(taxis.length === 3);
+      assert(taxis[0].constructor.constructorName === 'constructor 1');
+      assert(taxis[1].constructor.constructorName === 'constructor 1');
+      assert(taxis[2].constructor.constructorName === 'constructor 1');
+      done();
+    });
+  });
   
-  describe('First association type', function () {
+  describe('Populate Deep First association type', function () {
     describe('One-to-One', function () {
-      it('should populate and apply criteria on associations', function (done) {          
+      it('should deeply populate and apply criteria on associations', function (done) {          
         taxiModel.findOne({where: {taxiMatricule: 'taxi_1'}})
                 .populate('constructor', {where: {constructorName: 'constructor 1'}})
                 .populate('constructor.departments',{departmentLabel: {contains: '4'}})
@@ -482,7 +492,7 @@ describe('Populate Deep', function () {
       });
     });
     describe('One-to-Many', function () {
-      it('should populate and apply criteria on associations', function (done) {
+      it('should deeply populate and apply criteria on associations', function (done) {
         companyModel.findOne({where: {companyName: 'company 1'}})
                 .populate('taxis', {taxiMatricule: 'taxi_4'})
                 .populate('taxis.breakdowns',{breakDownLevel: 10})
@@ -501,7 +511,7 @@ describe('Populate Deep', function () {
       });
     });
     describe('Many-to-Many Through', function () {
-      it('should populate and apply criteria on associations', function (done) {
+      it('should deeply populate and apply criteria on associations', function (done) {
         driverModel.findOne({where: {driverName: 'driver 1'}})
                 .populate('taxis', {taxiMatricule: 'taxi_4'})
                 .populate('taxis.breakdowns', {breakDownLevel: 10})
@@ -520,7 +530,7 @@ describe('Populate Deep', function () {
       });
     });
     describe('Many-to-Many', function () {
-      it('should populate and apply criteria on associations', function (done) {
+      it('should deeply populate and apply criteria on associations', function (done) {
         countryModel.findOne({name: 'france'}).exec(function (err, country) {
           country.constructors.add(1);
           country.constructors.add(2);
@@ -541,7 +551,7 @@ describe('Populate Deep', function () {
       });
     });
     describe('Many-to-One', function () {           
-      it('should populate and apply criteria on associations', function (done) {          
+      it('should deeply populate and apply criteria on associations', function (done) {          
         taxiModel.findOne({where: {taxiMatricule: 'taxi_1'}})
                 .populate('constructor', {where: {constructorName: 'constructor 1'}})
                 .populate('constructor.departments',{departmentLabel: {contains: '4'}})
