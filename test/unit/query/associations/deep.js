@@ -582,6 +582,17 @@ describe('Deep', function () {
     });
   });  
 
+  it('should populate using deep criteria', function (done) {
+    driverModel.findOne(3).populate('taxis', {sort: 'matricule', where: {breakdowns: {level: 5}}}).exec(function(err, driver) {
+      if (err) {
+        return done(err);
+      }
+      assert(driver.taxis.length === 1);
+      assert(driver.taxis[0].id === 3);
+      done();
+    });
+  });  
+
   describe('Populate Deep First association type', function () {
     describe('One-to-One', function () {
       it('should deeply populate and apply criteria on associations', function (done) {          
