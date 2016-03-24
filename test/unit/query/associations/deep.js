@@ -541,6 +541,46 @@ describe('Deep', function () {
       done();
     });
   });
+  
+  it('should find model using deep criteria with operator', function (done) {
+    driverModel.find({sort: 'id', where: {taxis: {or: [{matricule: 'taxi_1'}, {matricule: 'taxi_2'}]}}}).populate('taxis', {sort: 'matricule'}).exec(function(err, drivers) {
+      if (err) {
+        return done(err);
+      }
+      assert(drivers.length === 3);
+      assert(drivers[0].id === 1);
+      assert(drivers[0].taxis.length === 3);    
+      assert(drivers[0].taxis[0].matricule === 'taxi_1');
+      assert(drivers[0].taxis[1].matricule === 'taxi_4');
+      assert(drivers[0].taxis[2].matricule === 'taxi_5');
+      assert(drivers[1].id === 2);
+      assert(drivers[1].taxis.length === 2);    
+      assert(drivers[1].taxis[0].matricule === 'taxi_1');
+      assert(drivers[1].taxis[1].matricule === 'taxi_2');
+      assert(drivers[2].id === 3);
+      assert(drivers[2].taxis.length === 2);    
+      assert(drivers[2].taxis[0].matricule === 'taxi_2');
+      assert(drivers[2].taxis[1].matricule === 'taxi_3');
+      done();
+    });
+  });
+  
+  it('should find model using deep criteria in operator', function (done) {
+    driverModel.find({sort: 'id', where: {or: [{taxis: {matricule: 'taxi_3'}}, {address: {city: 'city 4'}}]}}).populate('taxis', {sort: 'matricule'}).exec(function(err, drivers) {
+      if (err) {
+        return done(err);
+      }
+      assert(drivers.length === 2);
+      assert(drivers[0].id === 3);
+      assert(drivers[0].taxis.length === 2);    
+      assert(drivers[0].taxis[0].matricule === 'taxi_2');
+      assert(drivers[0].taxis[1].matricule === 'taxi_3');
+      assert(drivers[1].id === 4);
+      assert(drivers[1].taxis.length === 0);    
+      assert(drivers[1].address === 4);
+      done();
+    });
+  });  
 
   describe('Populate Deep First association type', function () {
     describe('One-to-One', function () {
