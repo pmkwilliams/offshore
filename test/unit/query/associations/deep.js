@@ -30,9 +30,9 @@ var async = require('async');
 var offshore = new Offshore();
 var migrate = 'drop';
 
-describe('Deep', function () {
+describe('Deep', function() {
   var companyModel, taxiModel, driverModel, rideModel, constructorModel, addressModel, breakDownModel, departmentModel, countryModel;
-  before(function (done) {
+  before(function(done) {
     var Company = Offshore.Collection.extend({
       identity: 'Company',
       connection: 'pop_deep',
@@ -188,7 +188,7 @@ describe('Deep', function () {
         }
       }
     });
-    var Country =  Offshore.Collection.extend({
+    var Country = Offshore.Collection.extend({
       identity: 'Country',
       connection: 'pop_deep',
       tableName: 'country_table',
@@ -305,7 +305,7 @@ describe('Deep', function () {
       {id: 4, name: 'dep 4', constructor: 1},
       {id: 5, name: 'dep 5', constructor: 2}
     ];
-    
+
     var countries = [
       {id: 1, name: 'france'},
       {id: 2, name: 'germany'}
@@ -321,13 +321,16 @@ describe('Deep', function () {
     offshore.loadCollection(Department);
     offshore.loadCollection(Country);
 
-    var connections = {'pop_deep': {
-        adapter: 'adapter'}
+    var connections = {
+      pop_deep: {
+        adapter: 'adapter'
+      }
     };
 
-    offshore.initialize({adapters: {adapter: require('offshore-memory')}, connections: connections}, function (err, colls) {
-      if (err)
+    offshore.initialize({adapters: {adapter: require('offshore-memory')}, connections: connections}, function(err, colls) {
+      if (err) {
         return done(err);
+      }
 
       companyModel = colls.collections.company;
       taxiModel = colls.collections.taxi;
@@ -340,350 +343,363 @@ describe('Deep', function () {
       countryModel = colls.collections.country;
 
       async.series([
-        function (callback) {
+        function(callback) {
           companyModel.createEach(companies, callback);
         },
-        function (callback) {
+        function(callback) {
           taxiModel.createEach(taxis, callback);
         },
-        function (callback) {
+        function(callback) {
           driverModel.createEach(drivers, callback);
         },
-        function (callback) {
+        function(callback) {
           rideModel.createEach(rides, callback);
-        }, function (callback) {
+        }, function(callback) {
           addressModel.createEach(addresses, callback);
         },
-        function (callback) {
+        function(callback) {
           constructorModel.createEach(constructors, callback);
         },
-        function (callback) {
+        function(callback) {
           breakDownModel.createEach(breakDowns, callback);
         },
-        function (callback) {
+        function(callback) {
           departmentModel.createEach(departments, callback);
         },
-        function (callback) {
+        function(callback) {
           countryModel.createEach(countries, function(err, countries) {
-			if (err) {
+            if (err) {
               return callback(err);
             }
             countryModel.findOne(1, function(err, country) {
               country.constructors.add(1);
-			  country.constructors.add(2);
+              country.constructors.add(2);
               country.save(callback);
             });
           });
         }
-      ], function (err) {
-        if (err)
+      ], function(err) {
+        if (err) {
           return done(err);
+        }
         done();
       });
     });
 
   });
-  /* no hypothesis can be made on the find result order, so adding sorts in each test */
-  it('should deeply populate a branch', function (done) {
-    companyModel.find().sort('id asc')
-            .populate('drivers.taxis', {sort: {id: 1}})
-            .populate('drivers.taxis.constructor.departments', {sort: {id: 1}})
-            .exec(function (err, companies) {
-              if (err) return done(err);
-              // Root Level
-              assert(companies.length === 2 && companies[1].name === 'company 2', 'Root criteria not applied.');
-              //Level 1
-              assert(companies[1].drivers.length === 2, 'Could not populate first level oneToMany collection.');
-              assert(companies[1].drivers[0].name === 'driver 2', 'First level not correctly populated.');
 
-              //Level 2
-              assert(companies[1].drivers[0].taxis.length === 2, 'Could not populate second level manyToMany collection.');
-              var taxi1 = companies[1].drivers[0].taxis[0];
-              var taxi2 = companies[1].drivers[0].taxis[1];
-              assert(taxi1.matricule === 'taxi_1' && taxi2.matricule === 'taxi_2', 'Second level not correctly populated.');
-              //Level 3
-              assert(taxi1.constructor, 'Could not populate third level manyToOne model.');
-              var constructor1 = taxi1.constructor;
-              var constructor2 = taxi2.constructor;
-              assert(constructor1.name === 'constructor 1' && constructor2.name === 'constructor 2',
-                      'Third level not correctly populated.');
-              //Level 4
-              assert(constructor1.departments.length === 3, 'Could not populate fourth level oneToMany collection.');
-              assert(constructor1.departments[0].name === 'dep 1' && constructor1.departments[1].name === 'dep 2'
-                      && constructor1.departments[2].name === 'dep 4', 'Fourth level not correctly populated.');
-              assert(constructor2.departments.length === 2, 'Could not populate fourth level oneToMany collection.');
-              assert(constructor2.departments[0].name === 'dep 3',
-                      'Fourth level not correctly populated.');
-              done();
-            });
-  });
+  describe('Populate', function() {
+    it('should deeply populate a branch', function(done) {
+      companyModel.find().sort('id asc')
+        .populate('drivers.taxis', {sort: {id: 1}})
+        .populate('drivers.taxis.constructor.departments', {sort: {id: 1}})
+        .exec(function(err, companies) {
+          if (err) {
+            return done(err);
+          }
+          // Root Level
+          assert(companies.length === 2 && companies[1].name === 'company 2', 'Root criteria not applied.');
+          //Level 1
+          assert(companies[1].drivers.length === 2, 'Could not populate first level oneToMany collection.');
+          assert(companies[1].drivers[0].name === 'driver 2', 'First level not correctly populated.');
 
-  it('should deeply populate multiple branchs', function (done) {
-    companyModel.find().where({name: 'company 2'})
-            .populate('drivers.taxis', {sort: {id: 1}})
-            .populate('drivers.address')
-            .populate('taxis')
-            .exec(function (err, companies) {
-              if (err) return done(err);
-              // Root Level
-              assert(companies.length === 1 && companies[0].name === 'company 2', 'Root criteria not applied.');
-              //Level 1
-              assert(companies[0].drivers.length === 2, 'Could not populate first level oneToMany collection.');
-              assert(companies[0].drivers[0].name === 'driver 2', 'First level not correctly populated.');
-              assert(companies[0].taxis.length === 2, 'First level not correctly populated.');
-              //Level 2 A
-              assert(companies[0].drivers[0].taxis.length === 2, 'Could not populate second level manyToMany collection.');
-              var taxi1 = companies[0].drivers[0].taxis[0];
-              assert(taxi1.matricule === 'taxi_1', 'Second level (A) not correctly populated.');
-              //Level 2 B
-              assert(companies[0].drivers[0].address.city === 'city 2', 'Second level (B) criteria not populated.');
-              done();
-            });
-  });
+          //Level 2
+          assert(companies[1].drivers[0].taxis.length === 2, 'Could not populate second level manyToMany collection.');
+          var taxi1 = companies[1].drivers[0].taxis[0];
+          var taxi2 = companies[1].drivers[0].taxis[1];
+          assert(taxi1.matricule === 'taxi_1' && taxi2.matricule === 'taxi_2', 'Second level not correctly populated.');
+          //Level 3
+          assert(taxi1.constructor, 'Could not populate third level manyToOne model.');
+          var constructor1 = taxi1.constructor;
+          var constructor2 = taxi2.constructor;
+          assert(constructor1.name === 'constructor 1' && constructor2.name === 'constructor 2',
+            'Third level not correctly populated.');
+          //Level 4
+          assert(constructor1.departments.length === 3, 'Could not populate fourth level oneToMany collection.');
+          assert(constructor1.departments[0].name === 'dep 1' && constructor1.departments[1].name === 'dep 2'
+            && constructor1.departments[2].name === 'dep 4', 'Fourth level not correctly populated.');
+          assert(constructor2.departments.length === 2, 'Could not populate fourth level oneToMany collection.');
+          assert(constructor2.departments[0].name === 'dep 3',
+            'Fourth level not correctly populated.');
+          done();
+        });
+    });
 
-  it('should apply criteria to current populate path last alias', function (done) {
-    companyModel.find().where({name: 'company 1'})
-            .populate('drivers', {name: 'driver 3'})
-            .populate('drivers.taxis', {matricule: 'taxi_3'})
-            .populate('drivers.taxis.breakdowns', {where: {level: {'>': 2}}, sort: {level: 1}})
-            .exec(function (err, companies) {
-              if (err) return done(err);
-              // Root Level
-              assert(companies.length === 1 && companies[0].name === 'company 1', 'Root criteria not applied.');
-              //Level 1
-              assert(companies[0].drivers.length === 1, 'Could not populate first level oneToMany collection.');
-              assert(companies[0].drivers[0].name === 'driver 3', 'First level criteria not applied.');
-              //Level 2
-              assert(companies[0].drivers[0].taxis.length === 1, 'Could not populate second level manyToMany collection.');
-              var taxi = companies[0].drivers[0].taxis[0];
-              assert(taxi.matricule === 'taxi_3', 'Second level criteria not applied.');
-              //Level 3
-              assert(taxi.breakdowns.length === 2, 'Could not populate third level oneToMany collection.');
-              assert(taxi.breakdowns[0].level === 5 && taxi.breakdowns[1].level === 8, 'Third level criteria not applied.');
+    it('should deeply populate multiple branchs', function(done) {
+      companyModel.find().where({name: 'company 2'})
+        .populate('drivers.taxis', {sort: {id: 1}})
+        .populate('drivers.address')
+        .populate('taxis')
+        .exec(function(err, companies) {
+          if (err)
+            return done(err);
+          // Root Level
+          assert(companies.length === 1 && companies[0].name === 'company 2', 'Root criteria not applied.');
+          //Level 1
+          assert(companies[0].drivers.length === 2, 'Could not populate first level oneToMany collection.');
+          assert(companies[0].drivers[0].name === 'driver 2', 'First level not correctly populated.');
+          assert(companies[0].taxis.length === 2, 'First level not correctly populated.');
+          //Level 2 A
+          assert(companies[0].drivers[0].taxis.length === 2, 'Could not populate second level manyToMany collection.');
+          var taxi1 = companies[0].drivers[0].taxis[0];
+          assert(taxi1.matricule === 'taxi_1', 'Second level (A) not correctly populated.');
+          //Level 2 B
+          assert(companies[0].drivers[0].address.city === 'city 2', 'Second level (B) criteria not populated.');
+          done();
+        });
+    });
 
-              done();
-            });
-  });
+    it('should apply criteria to current populate path last alias', function(done) {
+      companyModel.find().where({name: 'company 1'})
+        .populate('drivers', {name: 'driver 3'})
+        .populate('drivers.taxis', {matricule: 'taxi_3'})
+        .populate('drivers.taxis.breakdowns', {where: {level: {'>': 2}}, sort: {level: 1}})
+        .exec(function(err, companies) {
+          if (err)
+            return done(err);
+          // Root Level
+          assert(companies.length === 1 && companies[0].name === 'company 1', 'Root criteria not applied.');
+          //Level 1
+          assert(companies[0].drivers.length === 1, 'Could not populate first level oneToMany collection.');
+          assert(companies[0].drivers[0].name === 'driver 3', 'First level criteria not applied.');
+          //Level 2
+          assert(companies[0].drivers[0].taxis.length === 1, 'Could not populate second level manyToMany collection.');
+          var taxi = companies[0].drivers[0].taxis[0];
+          assert(taxi.matricule === 'taxi_3', 'Second level criteria not applied.');
+          //Level 3
+          assert(taxi.breakdowns.length === 2, 'Could not populate third level oneToMany collection.');
+          assert(taxi.breakdowns[0].level === 5 && taxi.breakdowns[1].level === 8, 'Third level criteria not applied.');
 
-  it('should deeply populate nested collections', function (done) {
-    companyModel.find().where({id: 2})
-            .populate('taxis')
-            .populate('taxis.breakdowns')
-            .exec(function (err, company) {
-              if (err) return done(err);
-              assert(company[0].taxis[0].breakdowns.length === 1);
-              assert(company[0].taxis[1].breakdowns.length === 3);
-              done();
-            });
-  });
+          done();
+        });
+    });
 
-  it('findOne with populate deep should return undefined if there is no results', function (done) {
-    companyModel.findOne().where({id: 999})
-            .populate('taxis')
-            .populate('taxis.breakdowns')
-            .exec(function (err, company) {
-              if (err) {
-                return done(err);
-              }
-              assert(company === void(0));
-              done();
-            });
-  });
+    it('should deeply populate nested collections', function(done) {
+      companyModel.find().where({id: 2})
+        .populate('taxis')
+        .populate('taxis.breakdowns')
+        .exec(function(err, company) {
+          if (err)
+            return done(err);
+          assert(company[0].taxis[0].breakdowns.length === 1);
+          assert(company[0].taxis[1].breakdowns.length === 3);
+          done();
+        });
+    });
 
-  it('should find model using deep criteria on belongsTo', function (done) {
-    taxiModel.find({where: {constructor: {name: 'constructor 1'}}}).populate('constructor').exec(function(err, taxis) {
-      if (err) {
-        return done(err);
-      }
-      assert(taxis.length === 3);
-      assert(taxis[0].constructor.name === 'constructor 1');
-      assert(taxis[1].constructor.name === 'constructor 1');
-      assert(taxis[2].constructor.name === 'constructor 1');
-      done();
+    it('findOne with populate deep should return undefined if there is no results', function(done) {
+      companyModel.findOne().where({id: 999})
+        .populate('taxis')
+        .populate('taxis.breakdowns')
+        .exec(function(err, company) {
+          if (err) {
+            return done(err);
+          }
+          assert(company === void(0));
+          done();
+        });
     });
   });
-
-  it('should find model using deep criteria on hasManyToOne', function (done) {
-    taxiModel.find({where: {breakdowns: {level: 11}}}).populate('breakdowns').exec(function(err, taxis) {
-      if (err) {
-        return done(err);
-      }
-      assert(taxis[0].id === 5);
-      assert(taxis[0].breakdowns[0].id === 7);
-      assert(taxis[0].breakdowns[0].level === 11);
-      done();
-    });
-  });
-
-  it('should find model using deep criteria on hasManyToMany', function (done) {
-    constructorModel.find({where: {countries: {name: 'france'}}}).populate('countries').exec(function(err, constructors) {
-      if (err) {
-        return done(err);
-      }      
-      assert(constructors.length === 2);
-      assert(constructors[0].countries[0].name === 'france');
-      assert(constructors[1].countries[0].name === 'france');
-      done();
-    });
-  });
-  
-  it('should find model using deep criteria on hasManyToMany through', function (done) {
-    driverModel.find({where: {taxis: {matricule: 'taxi_4'}}}).populate('taxis', {sort: 'matricule'}).exec(function(err, drivers) {
-      if (err) {
-        return done(err);
-      }
-      assert(drivers.length === 1);
-      assert(drivers[0].id === 1);
-      assert(drivers[0].taxis.length === 3);    
-      assert(drivers[0].taxis[0].matricule === 'taxi_1');
-      assert(drivers[0].taxis[1].matricule === 'taxi_4');
-      assert(drivers[0].taxis[2].matricule === 'taxi_5');
-      done();
-    });
-  });
-  
-  it('should find model using deep criteria with operator', function (done) {
-    driverModel.find({sort: 'id', where: {taxis: {or: [{matricule: 'taxi_1'}, {matricule: 'taxi_2'}]}}}).populate('taxis', {sort: 'matricule'}).exec(function(err, drivers) {
-      if (err) {
-        return done(err);
-      }
-      assert(drivers.length === 3);
-      assert(drivers[0].id === 1);
-      assert(drivers[0].taxis.length === 3);    
-      assert(drivers[0].taxis[0].matricule === 'taxi_1');
-      assert(drivers[0].taxis[1].matricule === 'taxi_4');
-      assert(drivers[0].taxis[2].matricule === 'taxi_5');
-      assert(drivers[1].id === 2);
-      assert(drivers[1].taxis.length === 2);    
-      assert(drivers[1].taxis[0].matricule === 'taxi_1');
-      assert(drivers[1].taxis[1].matricule === 'taxi_2');
-      assert(drivers[2].id === 3);
-      assert(drivers[2].taxis.length === 2);    
-      assert(drivers[2].taxis[0].matricule === 'taxi_2');
-      assert(drivers[2].taxis[1].matricule === 'taxi_3');
-      done();
-    });
-  });
-  
-  it('should find model using deep criteria in operator', function (done) {
-    driverModel.find({sort: 'id', where: {or: [{taxis: {matricule: 'taxi_3'}}, {address: {city: 'city 4'}}]}}).populate('taxis', {sort: 'matricule'}).exec(function(err, drivers) {
-      if (err) {
-        return done(err);
-      }
-      assert(drivers.length === 2);
-      assert(drivers[0].id === 3);
-      assert(drivers[0].taxis.length === 2);    
-      assert(drivers[0].taxis[0].matricule === 'taxi_2');
-      assert(drivers[0].taxis[1].matricule === 'taxi_3');
-      assert(drivers[1].id === 4);
-      assert(drivers[1].taxis.length === 0);    
-      assert(drivers[1].address === 4);
-      done();
-    });
-  });  
-
-  it('should populate using deep criteria', function (done) {
-    driverModel.findOne(3).populate('taxis', {sort: 'matricule', where: {breakdowns: {level: 5}}}).exec(function(err, driver) {
-      if (err) {
-        return done(err);
-      }
-      assert(driver.taxis.length === 1);
-      assert(driver.taxis[0].id === 3);
-      done();
-    });
-  });  
-
-  describe('Populate Deep First association type', function () {
-    describe('One-to-One', function () {
-      it('should deeply populate and apply criteria on associations', function (done) {          
-        taxiModel.findOne({where: {matricule: 'taxi_1'}})
-                .populate('constructor', {where: {name: 'constructor 1'}})
-                .populate('constructor.departments',{name: {contains: '4'}})
-                .exec(function (err, taxi) {
-                  if (err) return done(err);
-                  // Root Level
-                  assert(taxi.matricule === 'taxi_1', 'Root criteria not applied.');
-                  //Level 1
-                  assert(taxi.constructor, 'Could not populate first level with criteria.');
-                  assert(taxi.constructor.name === 'constructor 1', 'First level criteria not applied.');
-                  //Level 2 
-                  assert(taxi.constructor.departments, 'Second level not populated.');
-                  assert(taxi.constructor.departments[0].name === 'dep 4', 'Second level criteria not applied.');
-                  done();
-                });
+  describe('Criteria', function() {
+    it('should find model using deep criteria on belongsTo', function(done) {
+      taxiModel.find({where: {constructor: {name: 'constructor 1'}}}).populate('constructor').exec(function(err, taxis) {
+        if (err) {
+          return done(err);
+        }
+        assert(taxis.length === 3);
+        assert(taxis[0].constructor.name === 'constructor 1');
+        assert(taxis[1].constructor.name === 'constructor 1');
+        assert(taxis[2].constructor.name === 'constructor 1');
+        done();
       });
     });
-    describe('One-to-Many', function () {
-      it('should deeply populate and apply criteria on associations', function (done) {
-        companyModel.findOne({where: {name: 'company 1'}})
-                .populate('taxis', {matricule: 'taxi_4'})
-                .populate('taxis.breakdowns',{level: 10})
-                .exec(function (err, company) {
-                  if (err) return done(err);
-                  // Root Level
-                  assert(company.name === 'company 1', 'Root criteria not applied.');
-                  //Level 1
-                  assert(company.taxis, 'Could not populate first level');
-                  assert(company.taxis[0].matricule === 'taxi_4', 'First level criteria not applied.');
-                  //Level 2 
-                  assert(company.taxis[0].breakdowns, 'Second level not populated.');
-                  assert(company.taxis[0].breakdowns[0].level === 10, 'Second level criteria not applied.');
-                  done();
-                });
+
+    it('should find model using deep criteria on hasManyToOne', function(done) {
+      taxiModel.find({where: {breakdowns: {level: 11}}}).populate('breakdowns').exec(function(err, taxis) {
+        if (err) {
+          return done(err);
+        }
+        assert(taxis[0].id === 5);
+        assert(taxis[0].breakdowns[0].id === 7);
+        assert(taxis[0].breakdowns[0].level === 11);
+        done();
       });
     });
-    describe('Many-to-Many Through', function () {
-      it('should deeply populate and apply criteria on associations', function (done) {
-        driverModel.findOne({where: {name: 'driver 1'}})
-                .populate('taxis', {matricule: 'taxi_4'})
-                .populate('taxis.breakdowns', {level: 10})
-                .exec(function (err, driver) {
-                  if (err) return done(err);
-                  // Root Level
-                  assert(driver.name === 'driver 1', 'Root criteria not applied.');
-                  //Level 1
-                  assert(driver.taxis, 'Could not populate first level with criteria.');
-                  assert(driver.taxis[0].matricule === 'taxi_4', 'first level criteria not applied.');
-                  //Level 2
-                  assert(driver.taxis[0].breakdowns, 'Second level not populated.');
-                  assert(driver.taxis[0].breakdowns[0].level === 10, 'Second level criteria not applied.');
-                  done();
-                });
+
+    it('should find model using deep criteria on hasManyToMany', function(done) {
+      constructorModel.find({where: {countries: {name: 'france'}}}).populate('countries').exec(function(err, constructors) {
+        if (err) {
+          return done(err);
+        }
+        assert(constructors.length === 2);
+        assert(constructors[0].countries[0].name === 'france');
+        assert(constructors[1].countries[0].name === 'france');
+        done();
       });
     });
-    describe('Many-to-Many', function() {
-      it('should deeply populate and apply criteria on associations', function(done) {
-        countryModel.findOne({name: 'france'})
-          .populate('constructors', {name: 'constructor 1'})
-          .populate('constructors.departments', {name: 'dep 4'})
-          .exec(function(err, country) {
-            assert(country.name === 'france', 'Root criteria not applied.');
-            assert(country.constructors, 'Could not populate first level with criteria.');
-            assert(country.constructors[0].name === 'constructor 1', 'first level criteria not applied.');
-            assert(country.constructors[0].departments, 'Second level not populated.');
-            assert(country.constructors[0].departments[0].name === 'dep 4', 'Second level criteria not applied.');
-            done();
-          });
+
+    it('should find model using deep criteria on hasManyToMany through', function(done) {
+      driverModel.find({where: {taxis: {matricule: 'taxi_4'}}}).populate('taxis', {sort: 'matricule'}).exec(function(err, drivers) {
+        if (err) {
+          return done(err);
+        }
+        assert(drivers.length === 1);
+        assert(drivers[0].id === 1);
+        assert(drivers[0].taxis.length === 3);
+        assert(drivers[0].taxis[0].matricule === 'taxi_1');
+        assert(drivers[0].taxis[1].matricule === 'taxi_4');
+        assert(drivers[0].taxis[2].matricule === 'taxi_5');
+        done();
       });
     });
-    describe('Many-to-One', function () {           
-      it('should deeply populate and apply criteria on associations', function (done) {          
-        taxiModel.findOne({where: {matricule: 'taxi_1'}})
-                .populate('constructor', {where: {name: 'constructor 1'}})
-                .populate('constructor.departments',{name: {contains: '4'}})
-                .exec(function (err, taxi) {
-                  if (err) return done(err);
-                  // Root Level
-                  assert(taxi.matricule === 'taxi_1', 'Root criteria not applied.');
-                  //Level 1
-                  assert(taxi.constructor, 'Could not populate first level with criteria.');
-                  assert(taxi.constructor.name === 'constructor 1', 'First level criteria not applied.');
-                  //Level 2 
-                  assert(taxi.constructor.departments, 'Second level not populated.');
-                  assert(taxi.constructor.departments[0].name === 'dep 4', 'Second level criteria not applied.');
-                  done();
-                });
+
+    it('should find model using deep criteria with operator', function(done) {
+      driverModel.find({sort: 'id', where: {taxis: {or: [{matricule: 'taxi_1'}, {matricule: 'taxi_2'}]}}}).populate('taxis', {sort: 'matricule'}).exec(function(err, drivers) {
+        if (err) {
+          return done(err);
+        }
+        assert(drivers.length === 3);
+        assert(drivers[0].id === 1);
+        assert(drivers[0].taxis.length === 3);
+        assert(drivers[0].taxis[0].matricule === 'taxi_1');
+        assert(drivers[0].taxis[1].matricule === 'taxi_4');
+        assert(drivers[0].taxis[2].matricule === 'taxi_5');
+        assert(drivers[1].id === 2);
+        assert(drivers[1].taxis.length === 2);
+        assert(drivers[1].taxis[0].matricule === 'taxi_1');
+        assert(drivers[1].taxis[1].matricule === 'taxi_2');
+        assert(drivers[2].id === 3);
+        assert(drivers[2].taxis.length === 2);
+        assert(drivers[2].taxis[0].matricule === 'taxi_2');
+        assert(drivers[2].taxis[1].matricule === 'taxi_3');
+        done();
       });
+    });
+
+    it('should find model using deep criteria in operator', function(done) {
+      driverModel.find({sort: 'id', where: {or: [{taxis: {matricule: 'taxi_3'}}, {address: {city: 'city 4'}}]}}).populate('taxis', {sort: 'matricule'}).exec(function(err, drivers) {
+        if (err) {
+          return done(err);
+        }
+        assert(drivers.length === 2);
+        assert(drivers[0].id === 3);
+        assert(drivers[0].taxis.length === 2);
+        assert(drivers[0].taxis[0].matricule === 'taxi_2');
+        assert(drivers[0].taxis[1].matricule === 'taxi_3');
+        assert(drivers[1].id === 4);
+        assert(drivers[1].taxis.length === 0);
+        assert(drivers[1].address === 4);
+        done();
+      });
+    });
+
+    it('should populate using deep criteria', function(done) {
+      driverModel.findOne(3).populate('taxis', {sort: 'matricule', where: {breakdowns: {level: 5}}}).exec(function(err, driver) {
+        if (err) {
+          return done(err);
+        }
+        assert(driver.taxis.length === 1);
+        assert(driver.taxis[0].id === 3);
+        done();
+      });
+    });
+  });
+
+  describe('Associations', function() {
+
+    it('should deeply populate and apply criteria on associations (One-to-One)', function(done) {
+      taxiModel.findOne({where: {matricule: 'taxi_1'}})
+        .populate('constructor', {where: {name: 'constructor 1'}})
+        .populate('constructor.departments', {name: {contains: '4'}})
+        .exec(function(err, taxi) {
+          if (err)
+            return done(err);
+          // Root Level
+          assert(taxi.matricule === 'taxi_1', 'Root criteria not applied.');
+          //Level 1
+          assert(taxi.constructor, 'Could not populate first level with criteria.');
+          assert(taxi.constructor.name === 'constructor 1', 'First level criteria not applied.');
+          //Level 2 
+          assert(taxi.constructor.departments, 'Second level not populated.');
+          assert(taxi.constructor.departments[0].name === 'dep 4', 'Second level criteria not applied.');
+          done();
+        });
+    });
+
+    it('should deeply populate and apply criteria on associations (One-to-Many)', function(done) {
+      companyModel.findOne({where: {name: 'company 1'}})
+        .populate('taxis', {matricule: 'taxi_4'})
+        .populate('taxis.breakdowns', {level: 10})
+        .exec(function(err, company) {
+          if (err)
+            return done(err);
+          // Root Level
+          assert(company.name === 'company 1', 'Root criteria not applied.');
+          //Level 1
+          assert(company.taxis, 'Could not populate first level');
+          assert(company.taxis[0].matricule === 'taxi_4', 'First level criteria not applied.');
+          //Level 2 
+          assert(company.taxis[0].breakdowns, 'Second level not populated.');
+          assert(company.taxis[0].breakdowns[0].level === 10, 'Second level criteria not applied.');
+          done();
+        });
+    });
+
+    it('should deeply populate and apply criteria on associations (Many-to-Many Through)', function(done) {
+      driverModel.findOne({where: {name: 'driver 1'}})
+        .populate('taxis', {matricule: 'taxi_4'})
+        .populate('taxis.breakdowns', {level: 10})
+        .exec(function(err, driver) {
+          if (err)
+            return done(err);
+          // Root Level
+          assert(driver.name === 'driver 1', 'Root criteria not applied.');
+          //Level 1
+          assert(driver.taxis, 'Could not populate first level with criteria.');
+          assert(driver.taxis[0].matricule === 'taxi_4', 'first level criteria not applied.');
+          //Level 2
+          assert(driver.taxis[0].breakdowns, 'Second level not populated.');
+          assert(driver.taxis[0].breakdowns[0].level === 10, 'Second level criteria not applied.');
+          done();
+        });
+    });
+
+    it('should deeply populate and apply criteria on associations (Many-to-Many)', function(done) {
+      countryModel.findOne({name: 'france'})
+        .populate('constructors', {name: 'constructor 1'})
+        .populate('constructors.departments', {name: 'dep 4'})
+        .exec(function(err, country) {
+          if (err) {
+            done(err);
+          }
+          assert(country.name === 'france', 'Root criteria not applied.');
+          assert(country.constructors, 'Could not populate first level with criteria.');
+          assert(country.constructors[0].name === 'constructor 1', 'first level criteria not applied.');
+          assert(country.constructors[0].departments, 'Second level not populated.');
+          assert(country.constructors[0].departments[0].name === 'dep 4', 'Second level criteria not applied.');
+          done();
+        });
+    });
+
+    it('should deeply populate and apply criteria on associations (Many-to-One)', function(done) {
+      taxiModel.findOne({where: {matricule: 'taxi_1'}})
+        .populate('constructor', {where: {name: 'constructor 1'}})
+        .populate('constructor.departments', {name: {contains: '4'}})
+        .exec(function(err, taxi) {
+          if (err) {
+            return done(err);
+          }
+          // Root Level
+          assert(taxi.matricule === 'taxi_1', 'Root criteria not applied.');
+          //Level 1
+          assert(taxi.constructor, 'Could not populate first level with criteria.');
+          assert(taxi.constructor.name === 'constructor 1', 'First level criteria not applied.');
+          //Level 2 
+          assert(taxi.constructor.departments, 'Second level not populated.');
+          assert(taxi.constructor.departments[0].name === 'dep 4', 'Second level criteria not applied.');
+          done();
+        });
     });
   });
 });
+
