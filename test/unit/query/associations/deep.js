@@ -267,13 +267,13 @@ describe('Deep', function() {
       {id: 5, matricule: 'taxi_5', company: 1, constructor: 1}
     ];
     var rides = [
-      {taxi: 1, driver: 1},
-      {taxi: 4, driver: 1},
-      {taxi: 5, driver: 1},
-      {taxi: 2, driver: 2},
-      {taxi: 1, driver: 2},
-      {taxi: 3, driver: 3},
-      {taxi: 2, driver: 3}
+      {id: 1, taxi: 1, driver: 1},
+      {id: 2, taxi: 4, driver: 1},
+      {id: 3, taxi: 5, driver: 1},
+      {id: 4, taxi: 2, driver: 2},
+      {id: 5, taxi: 1, driver: 2},
+      {id: 6, taxi: 3, driver: 3},
+      {id: 7, taxi: 2, driver: 3}
     ];
 
     var addresses = [
