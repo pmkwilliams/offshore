@@ -49,7 +49,7 @@
     "lint": "eslint lib --reset"
   },
   "engines": {
-    "node": "*"
+    "node": ">=0.10.0 <=5.x.x"
   },
   "license": "MIT",
   "bugs": {
