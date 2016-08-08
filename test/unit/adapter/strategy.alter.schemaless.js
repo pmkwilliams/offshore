@@ -1,4 +1,4 @@
-var Waterline = require('../../../lib/waterline');
+var Offshore = require('../../../lib/offshore');
 var assert = require('assert');
 var _ = require('lodash');
 
@@ -69,7 +69,7 @@ describe('Alter Mode Recovery with schemaless data', function () {
       }
     };
 
-    var waterline = new Waterline();
+    var offshore = new Offshore();
 
     // Build up a model to test
     var PersonModel = {
@@ -81,7 +81,7 @@ describe('Alter Mode Recovery with schemaless data', function () {
       schema: false,
       attributes: {
         name: 'string',
-        age: 'number',
+        age: 'integer',
         id: 'integer'
       }
     };
@@ -97,9 +97,9 @@ describe('Alter Mode Recovery with schemaless data', function () {
     var adapters = {fake: adapter};
 
     // Build the collections and find the record
-    var PersonCollection = Waterline.Collection.extend(PersonModel);
-    waterline.loadCollection(PersonCollection);
-    waterline.initialize({adapters: adapters, connections: connections}, function (err, data) {
+    var PersonCollection = Offshore.Collection.extend(PersonModel);
+    offshore.loadCollection(PersonCollection);
+    offshore.initialize({adapters: adapters, connections: connections}, function (err, data) {
       if (err) return done(err);
       data.collections.person.findOne({id: 1}, function (err, found) {
         if (err) return done(err);

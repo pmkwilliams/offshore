@@ -15,13 +15,13 @@ var _colls = {};
  */
 module.exports = {
 
-  // Waterline Vocabulary Methods
+  // Offshore Vocabulary Methods
   //
   // (supports automatic switching for handlers since we know the fn signature)
   //
   // The tests work by passing a `_simulate` option as a property to the first argument,
   // which might be `options` or `values`.  If `options`, it's a criteria, so we have to
-  // check the `where` since it's being automatically normalized in Waterline core.
+  // check the `where` since it's being automatically normalized in Offshore core.
   find: function (conn, cid, options, cb) {
     // console.log('IN FIND::', require('util').inspect(arguments));
     return _interpretUsageTest(options.where && options.where._simulate, cb);

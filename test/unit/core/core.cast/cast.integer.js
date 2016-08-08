@@ -1,4 +1,4 @@
-var Waterline = require('../../../../lib/waterline'),
+var Offshore = require('../../../../lib/offshore'),
     assert = require('assert');
 
 describe('Core Type Casting', function() {
@@ -6,8 +6,8 @@ describe('Core Type Casting', function() {
     var person;
 
     before(function(done) {
-      var waterline = new Waterline();
-      var Person = Waterline.Collection.extend({
+      var offshore = new Offshore();
+      var Person = Offshore.Collection.extend({
         identity: 'person',
         connection: 'foo',
         attributes: {
@@ -20,7 +20,7 @@ describe('Core Type Casting', function() {
         }
       });
 
-      waterline.loadCollection(Person);
+      offshore.loadCollection(Person);
 
       var connections = {
         'foo': {
@@ -28,7 +28,7 @@ describe('Core Type Casting', function() {
         }
       };
 
-      waterline.initialize({ adapters: { foobar: {} }, connections: connections }, function(err, colls) {
+      offshore.initialize({ adapters: { foobar: {} }, connections: connections }, function(err, colls) {
         if(err) return done(err);
         person = colls.collections.person;
         done();

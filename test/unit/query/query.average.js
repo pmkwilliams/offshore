@@ -1,4 +1,4 @@
-var Waterline = require('../../../lib/waterline'),
+var Offshore = require('../../../lib/offshore'),
     assert = require('assert');
 
 describe('Collection average', function () {
@@ -9,8 +9,8 @@ describe('Collection average', function () {
     before(function (done) {
 
       // Extend for testing purposes
-      var waterline = new Waterline();
-      var Model = Waterline.Collection.extend({
+      var offshore = new Offshore();
+      var Model = Offshore.Collection.extend({
         identity: 'user',
         connection: 'foo',
         attributes: {
@@ -26,7 +26,7 @@ describe('Collection average', function () {
         }
       };
 
-      waterline.loadCollection(Model);
+      offshore.loadCollection(Model);
 
       var connections = {
         'foo': {
@@ -34,7 +34,7 @@ describe('Collection average', function () {
         }
       };
 
-      waterline.initialize({ adapters: { foobar: adapterDef }, connections: connections }, function(err, colls) {
+      offshore.initialize({ adapters: { foobar: adapterDef }, connections: connections }, function(err, colls) {
         if (err) return done(err);
         query = colls.collections.user;
         done();

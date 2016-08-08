@@ -1,6 +1,6 @@
-var Waterline = require('../../../../lib/waterline'),
-    Schema = require('waterline-schema'),
-    Transformer = require('../../../../lib/waterline/core/transformations'),
+var Offshore = require('../../../../lib/offshore'),
+    Schema = require('offshore-schema'),
+    Transformer = require('../../../../lib/offshore/core/transformations'),
     assert = require('assert');
 
 describe('Core Transformations', function() {
@@ -32,20 +32,34 @@ describe('Core Transformations', function() {
         assert(values.where.user.login);
         assert(values.where.user.login === 'foo');
       });
+
+      it('should work on SELECT queries', function() {
+        var values = transformer.serialize(
+          {
+            where: {
+              username: 'foo'
+            },
+            select: ['username']
+          }
+        );
+
+        assert(values.where.login);
+        assert.equal(values.select.indexOf('login'),  0);
+      });
     });
 
     describe('with associations', function() {
       var transformer;
 
       /**
-       * Build up real waterline schema for accurate testing
+       * Build up real offshore schema for accurate testing
        */
 
       before(function() {
         var collections = [],
-            waterline = new Waterline();
+            offshore = new Offshore();
 
-        collections.push(Waterline.Collection.extend({
+        collections.push(Offshore.Collection.extend({
           identity: 'customer',
           tableName: 'customer',
           attributes: {
@@ -56,7 +70,7 @@ describe('Core Transformations', function() {
           }
         }));
 
-        collections.push(Waterline.Collection.extend({
+        collections.push(Offshore.Collection.extend({
           identity: 'foo',
           tableName: 'foo',
           attributes: {

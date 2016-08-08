@@ -1,4 +1,4 @@
-var Waterline = require('../../../../lib/waterline'),
+var Offshore = require('../../../../lib/offshore'),
     assert = require('assert');
 
 describe('Core Schema', function() {
@@ -8,9 +8,9 @@ describe('Core Schema', function() {
     var userschemaless;
 
     before(function(done) {
-      var waterline = new Waterline();
+      var offshore = new Offshore();
       
-      var UserSchema = Waterline.Collection.extend({
+      var UserSchema = Offshore.Collection.extend({
         identity: 'user',
         connection: 'foo',
         schema: true,
@@ -29,7 +29,7 @@ describe('Core Schema', function() {
         }
       });
         
-      var UserSchemaless = Waterline.Collection.extend({
+      var UserSchemaless = Offshore.Collection.extend({
         identity: 'userschemaless',
         connection: 'foo',
         schema: false,
@@ -48,8 +48,8 @@ describe('Core Schema', function() {
         }
       });
 
-      waterline.loadCollection(UserSchema);
-      waterline.loadCollection(UserSchemaless);
+      offshore.loadCollection(UserSchema);
+      offshore.loadCollection(UserSchemaless);
         
       var connections = {
         'foo': {
@@ -57,7 +57,7 @@ describe('Core Schema', function() {
         }
       };
 
-      waterline.initialize({ adapters: { foobar: {} }, connections: connections }, function(err, colls) {
+      offshore.initialize({ adapters: { foobar: {} }, connections: connections }, function(err, colls) {
         if(err) return done(err);
         user = colls.collections.user;
         userschemaless = colls.collections.userschemaless;

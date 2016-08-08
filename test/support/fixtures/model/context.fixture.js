@@ -5,7 +5,7 @@
 
 module.exports = {
   connections: {},
-  waterline: {
+  offshore: {
     _collections: [],
     _connections: {},
     collections: {},
