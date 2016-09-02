@@ -1,4 +1,4 @@
-var Offshore = require('../../../lib/offshore'),
+var Waterline = require('../../../lib/waterline'),
     assert = require('assert');
 
 describe('Collection Query', function() {
@@ -10,8 +10,8 @@ describe('Collection Query', function() {
 
       before(function(done) {
 
-        var offshore = new Offshore();
-        var Model = Offshore.Collection.extend({
+        var waterline = new Waterline();
+        var Model = Waterline.Collection.extend({
           identity: 'user',
           connection: 'foo',
           attributes: {
@@ -24,7 +24,7 @@ describe('Collection Query', function() {
             }
           }
         });
-        var Nested = Offshore.Collection.extend({
+        var Nested = Waterline.Collection.extend({
           identity: 'nested',
           connection: 'foo',
           attributes: {
@@ -32,8 +32,8 @@ describe('Collection Query', function() {
           }
         });
 
-        offshore.loadCollection(Model);
-        offshore.loadCollection(Nested);
+        waterline.loadCollection(Model);
+        waterline.loadCollection(Nested);
 
         // Fixture Adapter Def
         var _id = 1;
@@ -57,7 +57,7 @@ describe('Collection Query', function() {
           }
         };
 
-        offshore.initialize({ adapters: { foobar: adapterDef }, connections: connections }, function(err, colls) {
+        waterline.initialize({ adapters: { foobar: adapterDef }, connections: connections }, function(err, colls) {
           if(err) return done(err);
           query = colls.collections.user;
           done();
@@ -79,8 +79,8 @@ describe('Collection Query', function() {
 
       before(function(done) {
 
-        var offshore = new Offshore();
-        var Model = Offshore.Collection.extend({
+        var waterline = new Waterline();
+        var Model = Waterline.Collection.extend({
           identity: 'user',
           connection: 'foo',
           attributes: {
@@ -96,7 +96,7 @@ describe('Collection Query', function() {
             }
           }
         });
-        var Nested = Offshore.Collection.extend({
+        var Nested = Waterline.Collection.extend({
           identity: 'nested',
           connection: 'foo',
           attributes: {
@@ -104,8 +104,8 @@ describe('Collection Query', function() {
           }
         });
 
-        offshore.loadCollection(Model);
-        offshore.loadCollection(Nested);
+        waterline.loadCollection(Model);
+        waterline.loadCollection(Nested);
 
         // Fixture Adapter Def
         var _id = 1;
@@ -135,7 +135,7 @@ describe('Collection Query', function() {
           }
         };
 
-        offshore.initialize({ adapters: { foobar: adapterDef }, connections: connections }, function(err, colls) {
+        waterline.initialize({ adapters: { foobar: adapterDef }, connections: connections }, function(err, colls) {
           if(err) return done(err);
           query = colls.collections.user;
           done();
@@ -159,8 +159,8 @@ describe('Collection Query', function() {
 
       before(function(done) {
 
-        var offshore = new Offshore();
-        var Model = Offshore.Collection.extend({
+        var waterline = new Waterline();
+        var Model = Waterline.Collection.extend({
           identity: 'user',
           connection: 'foo',
           attributes: {
@@ -176,7 +176,7 @@ describe('Collection Query', function() {
             }
           }
         });
-        var Nested = Offshore.Collection.extend({
+        var Nested = Waterline.Collection.extend({
           identity: 'nested',
           connection: 'foo',
           attributes: {
@@ -184,8 +184,8 @@ describe('Collection Query', function() {
           }
         });
 
-        offshore.loadCollection(Model);
-        offshore.loadCollection(Nested);
+        waterline.loadCollection(Model);
+        waterline.loadCollection(Nested);
 
         // Fixture Adapter Def
         var _id = 1;
@@ -221,7 +221,7 @@ describe('Collection Query', function() {
           }
         };
 
-        offshore.initialize({ adapters: { foobar: adapterDef }, connections: connections }, function(err, colls) {
+        waterline.initialize({ adapters: { foobar: adapterDef }, connections: connections }, function(err, colls) {
           if(err) return done(err);
           query = colls.collections.user;
           done();
@@ -246,8 +246,8 @@ describe('Collection Query', function() {
 
       before(function(done) {
 
-        var offshore = new Offshore();
-        var Model = Offshore.Collection.extend({
+        var waterline = new Waterline();
+        var Model = Waterline.Collection.extend({
           identity: 'user',
           connection: 'foo',
           attributes: {
@@ -261,7 +261,7 @@ describe('Collection Query', function() {
             }
           }
         });
-        var Nested = Offshore.Collection.extend({
+        var Nested = Waterline.Collection.extend({
           identity: 'nested',
           connection: 'foo',
           attributes: {
@@ -272,8 +272,8 @@ describe('Collection Query', function() {
           }
         });
 
-        offshore.loadCollection(Model);
-        offshore.loadCollection(Nested);
+        waterline.loadCollection(Model);
+        waterline.loadCollection(Nested);
 
         // Fixture Adapter Def
         var _id = 1;
@@ -299,7 +299,7 @@ describe('Collection Query', function() {
           }
         };
 
-        offshore.initialize({ adapters: { foobar: adapterDef }, connections: connections }, function(err, colls) {
+        waterline.initialize({ adapters: { foobar: adapterDef }, connections: connections }, function(err, colls) {
           if(err) return done(err);
           query = colls.collections.user;
           done();

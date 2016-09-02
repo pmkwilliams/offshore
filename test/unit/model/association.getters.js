@@ -1,6 +1,6 @@
 var assert = require('assert'),
     manyToManyFixture = require('../../support/fixtures/model/context.manyToMany.fixture'),
-    Model = require('../../../lib/offshore/model');
+    Model = require('../../../lib/waterline/model');
 
 describe('instance methods', function() {
   describe('association getters', function() {

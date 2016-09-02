@@ -1,43 +1,42 @@
+# [<img title="waterline-logo" src="http://i.imgur.com/3Xqh6Mz.png" width="810px" alt="Waterline logo"/>](https://github.com/balderdashy/waterline)
 
-Offshore is a fork of Waterline project.
+[![Build Status](https://travis-ci.org/balderdashy/waterline.svg?branch=master)](https://travis-ci.org/balderdashy/waterline)
+[![NPM version](https://badge.fury.io/js/waterline.svg)](http://badge.fury.io/js/waterline)
+[![Dependency Status](https://gemnasium.com/balderdashy/waterline.svg)](https://gemnasium.com/balderdashy/waterline)
+[![Test Coverage](https://codeclimate.com/github/balderdashy/waterline/badges/coverage.svg)](https://codeclimate.com/github/balderdashy/waterline)
+[![StackOverflow](http://img.shields.io/badge/stackoverflow-waterline-blue.svg)]( http://stackoverflow.com/questions/tagged/waterline)
+
+Waterline is a brand new kind of storage and retrieval engine.
 
 It provides a uniform API for accessing stuff from different kinds of databases, protocols, and 3rd party APIs. That means you write the same code to get and store things like users, whether they live in Redis, mySQL, LDAP, MongoDB, or Postgres.
 
-Offshore strives to inherit the best parts of ORMs like ActiveRecord, Hibernate, and Mongoose, but with a fresh perspective and emphasis on modularity, testability, and consistency across adapters.
+Waterline strives to inherit the best parts of ORMs like ActiveRecord, Hibernate, and Mongoose, but with a fresh perspective and emphasis on modularity, testability, and consistency across adapters.
 
-For detailed documentation, go to [Offshore Documentation](https://github.com/Atlantis-Software/offshore-docs) repository.
-
-## Why a fork?
-
-because it's the only way to integrate new features.
-
-## Changelog
-
- + [Deep Populate](https://github.com/Atlantis-Software/offshore-docs/blob/master/queries/query.md#populate)
- + [Cache Mechanism](https://github.com/Atlantis-Software/offshore-docs/blob/master/queries/query.md#cache)
- + [Associations Criteria](https://github.com/Atlantis-Software/offshore-docs/blob/master/models/associations/criteria.md)
-
-## What's Next?
-
-+ polymorphic associations
-+ Transactions
+For detailed documentation, go to [Waterline Documentation](https://github.com/balderdashy/waterline-docs) repository.
 
 ## Installation
 
 Install from NPM.
 
 ```bash
-$ npm install offshore
+$ npm install waterline
 ```
 
 ## Example
 
-#### Usage
+#### Using with Sails.js
+
+Waterline was extracted from the [Sails](https://github.com/balderdashy/sails) framework and is the default ORM used in Sails. For more information on using Waterline in your Sails App view the [Sails Docs](http://sailsjs.org).
+
+For examples of how to use with frameworks such as [Express](http://expressjs.com/) look in the [Example](https://github.com/balderdashy/waterline/tree/master/example) folder.
+
+
+#### Usage (standalone)
 ```javascript
-var Offshore = require('offshore');
+var Waterline = require('waterline');
 
 // Define your collection (aka model)
-var User = Offshore.Collection.extend({
+var User = Waterline.Collection.extend({
 
   attributes: {
 
@@ -58,24 +57,15 @@ var User = Offshore.Collection.extend({
 
 ### Adapters Concept
 
-Offshore uses the concept of an Adapter to translate a predefined set of methods into a query that can be understood by your data store. Adapters allow you to use various datastores such as MySQL, PostgreSQL, MongoDB, Redis, etc. and have a clear API for working with your model data.
+Waterline uses the concept of an Adapter to translate a predefined set of methods into a query that can be understood by your data store. Adapters allow you to use various datastores such as MySQL, PostgreSQL, MongoDB, Redis, etc. and have a clear API for working with your model data.
 
-It also allows an adapter to define it's own methods that don't necessarily fit into the CRUD methods defined by default in Offshore. If an adapter defines a custom method, Offshore will simply pass the function arguments down to the adapter.
+It also allows an adapter to define it's own methods that don't necessarily fit into the CRUD methods defined by default in Waterline. If an adapter defines a custom method, Waterline will simply pass the function arguments down to the adapter.
 
-**NOTE:** When using custom adapter methods the features of Offshore are not used. You no longer get the Lifecycle Callbacks and Validations as you would when using a defined Offshore method.
+**NOTE:** When using custom adapter methods the features of Waterline are not used. You no longer get the Lifecycle Callbacks and Validations as you would when using a defined Waterline method.
 
-You may also supply an array of adapters and Offshore will map out the methods so they are both mixed in. It works similar to Underscore's [Extend](http://underscorejs.org/#extend) method where the last item in the array will override any methods in adapters before it. This allows you to mixin both the traditional CRUD adapters such as MySQL with specialized adapters such as Twilio and have both types of methods available.
+You may also supply an array of adapters and Waterline will map out the methods so they are both mixed in. It works similar to Underscore's [Extend](http://underscorejs.org/#extend) method where the last item in the array will override any methods in adapters before it. This allows you to mixin both the traditional CRUD adapters such as MySQL with specialized adapters such as Twilio and have both types of methods available.
 
 #### Community Adapters
-
-  - [offshore-sql](https://github.com/Atlantis-Software/offshore-sql) mysql support and oracle in beta
-  - [offshore-memory](https://github.com/Atlantis-Software/offshore-memory)
-
-using waterline compatibility mode
-
-```javascript
-offshore.initialize({ compat: "waterline", ...
-```
 
   - [PostgreSQL](https://github.com/particlebanana/sails-postgresql) - *0.9+ compatible*
   - [MySQL](https://github.com/balderdashy/sails-mysql) - *0.9+ compatible*
@@ -96,9 +86,9 @@ offshore.initialize({ compat: "waterline", ...
 
 ## Collection
 
-A [Collection](https://github.com/Atlantis-Software/offshore/blob/master/lib/offshore/collection/index.js) is the main object used in Offshore. It defines the layout/schema of your data along with any validations and instance methods you create.
+A [Collection](https://github.com/balderdashy/waterline/blob/master/lib/waterline/collection/index.js) is the main object used in Waterline. It defines the layout/schema of your data along with any validations and instance methods you create.
 
-To create a new collection you extend `Offshore.Collection` and add in any properties you need.
+To create a new collection you extend `Waterline.Collection` and add in any properties you need.
 
 #### options
 
@@ -132,7 +122,7 @@ The following attribute types are currently available:
 #### Example Collection
 
 ```javascript
-var User = Offshore.Collection.extend({
+var User = Waterline.Collection.extend({
 
   // Define a custom table name
   tableName: 'user',
@@ -238,7 +228,7 @@ new User({ tableName: 'foobar', adapters: { postgresql: postgres }}, function(er
 
 ## Model
 
-Each result that gets returned from a Offshore query will be an instance of [Model](https://github.com/Atlantis-Software/offshore/blob/master/lib/offshore/model/index.js). This will add in any instance methods defined in your collection along with some CRUD helper methods. View the [Core Instance Methods](https://github.com/Atlantis-Software/offshore/blob/master/lib/offshore/model/index.js) to see how they are implemented.
+Each result that gets returned from a Waterline query will be an instance of [Model](https://github.com/balderdashy/waterline/blob/master/lib/waterline/model/index.js). This will add in any instance methods defined in your collection along with some CRUD helper methods. View the [Core Instance Methods](https://github.com/balderdashy/waterline/blob/master/lib/waterline/model/index.js) to see how they are implemented.
 
 Default CRUD instance methods:
 
@@ -250,7 +240,7 @@ Default CRUD instance methods:
 If you would like to filter records and remove certain attributes you can override the `toJSON` method like so:
 
 ```javascript
-var user = Offshore.Collection.extend({
+var user = Waterline.Collection.extend({
 
   attributes: {
     name: 'string',
@@ -407,15 +397,15 @@ User.find()
 
 ## Validations
 
-Validations are handled by [Offshore-validator](https://github.com/Atlantis-Software/offshore-validator) which is based off of [Node Validate](https://github.com/chriso/node-validator) and supports most of the properties in node-validate.
-For a full list of validations see: [Offshore-validator Validations](https://github.com/Atlantis-Software/offshore-validator/blob/master/lib/match/rules.js).
+Validations are handled by [Anchor](https://github.com/balderdashy/anchor) which is based off of [Node Validate](https://github.com/chriso/node-validator) and supports most of the properties in node-validate.
+For a full list of validations see: [Anchor Validations](https://github.com/balderdashy/anchor/blob/master/lib/match/rules.js).
 
-Validations are defined directly in you Collection attributes. In addition you may set the attribute `type` to any supported Offshore-validator type and Offshore will build a validation and set the schema type as a string for that attribute.
+Validations are defined directly in you Collection attributes. In addition you may set the attribute `type` to any supported Anchor type and Waterline will build a validation and set the schema type as a string for that attribute.
 
 Validation rules may be defined as simple values or functions (both sync and async) that return the value to test against.
 
 ```javascript
-var User = Offshore.Collection.extend({
+var User = Waterline.Collection.extend({
 
   attributes: {
 
@@ -450,7 +440,7 @@ var User = Offshore.Collection.extend({
   }
 });
 
-var Event = Offshore.Collection.extend({
+var Event = Waterline.Collection.extend({
 
   attributes: {
 
@@ -477,7 +467,7 @@ var Event = Offshore.Collection.extend({
 You can define your own types and their validation with the `types` hash. It's possible to access and compare values to other attributes.
 
 ```javascript
-var User = Offshore.Collection.extend({
+var User = Waterline.Collection.extend({
   types: {
     point: function(latlng){
      return latlng.x && latlng.y
@@ -520,7 +510,7 @@ You can add an index property to any attribute to create an index if your adapte
 against a key.
 
 ```javascript
-var User = Offshore.Collection.extend({
+var User = Waterline.Collection.extend({
 
   attributes: {
 
@@ -532,10 +522,10 @@ var User = Offshore.Collection.extend({
 });
 ```
 
-Currently Offshore doesn't support multi-column indexes in the attributes definition. If you would like to build any sort of special index you will still
+Currently Waterline doesn't support multi-column indexes in the attributes definition. If you would like to build any sort of special index you will still
 need to build that manually. Also note that when adding a `unique` property to an attribute, an index will automatically be created for that attribute.
 
-There is currently an issue with adding indexes to string fields. Because Offshore performs its queries in a case insensitive manner, we are unable to use the index on a string attribute.
+There is currently an issue with adding indexes to string fields. Because Waterline performs its queries in a case insensitive manner, we are unable to use the index on a string attribute.
 There are some workarounds being discussed but nothing is implemented so far. This will be updated in the near future to fully support indexes on strings.
 
 ## Lifecycle Callbacks
@@ -563,11 +553,11 @@ Lifecycle callbacks are functions you can define to run at certain times in a qu
 
 ## Associations
 
-With Offshore you can associate models with other models across all data stores. This means that
+With Waterline you can associate models with other models across all data stores. This means that
 your users can live in PostgreSQL and their photos can live in MongoDB and you can interact with
 the data as if they lived together on the same database. You can also have associations that
 live on seperate connections or in different databases within the same adapter. Read more about
-associations [here](https://github.com/Atlantis-Software/offshore-docs/blob/master/models/associations/associations.md).
+associations [here](https://github.com/balderdashy/waterline-docs/blob/master/models/associations/associations.md).
 
 ## Tests
 

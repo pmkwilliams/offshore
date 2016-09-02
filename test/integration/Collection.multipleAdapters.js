@@ -1,8 +1,8 @@
-var Offshore = require('../../lib/offshore');
+var Waterline = require('../../lib/waterline');
 var assert = require('assert');
 var _ = require('lodash');
 
-describe('Offshore Collection', function() {
+describe('Waterline Collection', function() {
   var User;
   var status = 0;
   var adapter_1 = {
@@ -29,15 +29,15 @@ describe('Offshore Collection', function() {
       return 'custom bar'
     }
   };
-  var Model = Offshore.Collection.extend({
+  var Model = Waterline.Collection.extend({
     attributes: {},
     connection: ['my_foo', 'my_bar'],
     tableName: 'tests'
   });
 
   before(function(done) {
-    var offshore = new Offshore();
-    offshore.loadCollection(Model);
+    var waterline = new Waterline();
+    waterline.loadCollection(Model);
 
     var connections = {
       'my_foo': {
@@ -48,7 +48,7 @@ describe('Offshore Collection', function() {
       }
     };
 
-    offshore.initialize({
+    waterline.initialize({
         adapters: {
           'foo': adapter_1,
           'bar': adapter_2

@@ -1,7 +1,7 @@
 /**
  * Module dependencies
  */
-var integrate = require('../../../lib/offshore/query/integrator');
+var integrate = require('../../../lib/waterline/query/integrator');
 var assert = require('assert');
 var should = require('should');
 var _ = require('lodash');

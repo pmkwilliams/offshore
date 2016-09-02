@@ -2,8 +2,8 @@
  * Test dependencies
  */
 
-var errorify = require('../../../lib/offshore/error');
-var WLError = require('../../../lib/offshore/error/WLError');
+var errorify = require('../../../lib/waterline/error');
+var WLError = require('../../../lib/waterline/error/WLError');
 var assert = require('assert');
 
 

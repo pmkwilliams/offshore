@@ -1,4 +1,4 @@
-var Validator = require('../../../lib/offshore/core/validations'),
+var Validator = require('../../../lib/waterline/core/validations'),
     assert = require('assert');
 
 describe('validations', function() {
@@ -22,7 +22,7 @@ describe('validations', function() {
           type: 'string',
           contains: function(cb) {
             setTimeout(function() {
-              return cb('http://');
+              return cb('http://')
             },1);
           }
         }
@@ -33,8 +33,7 @@ describe('validations', function() {
     });
 
     it('should error if invalid username is set', function(done) {
-      validator.validate({ name: 'Bob', username: 'bobby' }, function(err, errors) {
-        assert(!err);
+      validator.validate({ name: 'Bob', username: 'bobby' }, function(errors) {
         assert(errors);
         assert(errors.username);
         assert(errors.username[0].rule === 'equals');
@@ -43,16 +42,14 @@ describe('validations', function() {
     });
 
     it('should NOT error if valid username is set', function(done) {
-      validator.validate({ name: 'Bob', username: 'bob' }, function(err, errors) {
-        assert(!err, err);
+      validator.validate({ name: 'Bob', username: 'bob' }, function(errors) {
         assert(!errors);
         done();
       });
     });
 
     it('should error if invalid website is set', function(done) {
-      validator.validate({ website: 'www.google.com' }, function(err, errors) {
-        assert(!err, err);
+      validator.validate({ website: 'www.google.com' }, function(errors) {
         assert(errors);
         assert(errors.website);
         assert(errors.website[0].rule === 'contains');
@@ -61,8 +58,7 @@ describe('validations', function() {
     });
 
     it('should NOT error if valid website is set', function(done) {
-      validator.validate({ website: 'http://www.google.com' }, function(err, errors) {
-        assert(!err, err);
+      validator.validate({ website: 'http://www.google.com' }, function(errors) {
         assert(!errors);
         done();
       });

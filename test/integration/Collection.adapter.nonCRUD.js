@@ -1,19 +1,19 @@
-var Offshore = require('../../lib/offshore'),
+var Waterline = require('../../lib/waterline'),
     adapter = require('./fixtures/adapter.special.fixture'),
     assert = require('assert');
 
-describe('Offshore Collection', function() {
+describe('Waterline Collection', function() {
   var User;
 
   before(function(done) {
-    var Model = Offshore.Collection.extend({
+    var Model = Waterline.Collection.extend({
       attributes: {},
       connection: 'my_foo',
       tableName: 'tests'
     });
 
-    var offshore = new Offshore();
-    offshore.loadCollection(Model);
+    var waterline = new Waterline();
+    waterline.loadCollection(Model);
 
     var connections = {
       'my_foo': {
@@ -21,7 +21,7 @@ describe('Offshore Collection', function() {
       }
     };
 
-    offshore.initialize({ adapters: { foobar: adapter }, connections: connections }, function(err, colls) {
+    waterline.initialize({ adapters: { foobar: adapter }, connections: connections }, function(err, colls) {
       if(err) return done(err);
       User = colls.collections.tests;
       done();

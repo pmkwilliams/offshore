@@ -4,8 +4,8 @@
 var util = require('util');
 var mocha = require('mocha');
 
-var adapterName = 'offshore-memory';
-var TestRunner = require('offshore-adapter-tests');
+var adapterName = 'sails-memory';
+var TestRunner = require('waterline-adapter-tests');
 var Adapter = require(adapterName);
 
 
@@ -16,13 +16,13 @@ var interfaces = [];
 var features = [];
 try {
     package = require('../../node_modules/' + adapterName + '/package.json');
-    interfaces = package['offshoreAdapter'].interfaces;
-    features = package.offshoreAdapter.features;
+    interfaces = package['waterlineAdapter'].interfaces;
+    features = package.waterlineAdapter.features;
 }
 catch (e) {
     throw new Error(
     '\n'+
-    'Could not read supported interfaces from "offshore-adapter"."interfaces"'+'\n' +
+    'Could not read supported interfaces from "sails-adapter"."interfaces"'+'\n' +
     'in this adapter\'s `package.json` file ::' + '\n' +
     util.inspect(e)
     );
@@ -33,8 +33,11 @@ catch (e) {
 
 
 console.info('Testing `' + package.name + '`, a Sails adapter.');
-console.info('Running `offshore-adapter-tests` against ' + interfaces.length + ' interfaces...');
+console.info('Running `waterline-adapter-tests` against ' + interfaces.length + ' interfaces...');
 console.info('( ' + interfaces.join(', ') + ' )');
+console.log();
+console.log('Latest draft of Waterline adapter interface spec:');
+console.info('https://github.com/balderdashy/sails-docs/blob/master/contributing/adapter-specification.md');
 console.log();
 
 
@@ -43,9 +46,9 @@ console.log();
 /**
  * Integration Test Runner
  *
- * Uses the `offshore-adapter-tests` module to
+ * Uses the `waterline-adapter-tests` module to
  * run mocha tests against the specified interfaces
- * of the currently-implemented Offshore adapter API.
+ * of the currently-implemented Waterline adapter API.
  */
 new TestRunner({
 
@@ -78,16 +81,19 @@ new TestRunner({
     
     // Most databases implement 'semantic' and 'queryable'.
     // 
-    // As of Sails/Offshore v0.10, the 'associations' interface
+    // As of Sails/Waterline v0.10, the 'associations' interface
     // is also available.  If you don't implement 'associations',
-    // it will be polyfilled for you by Offshore core.  The core
+    // it will be polyfilled for you by Waterline core.  The core
     // implementation will always be used for cross-adapter / cross-connection
     // joins.
     // 
-    // In future versions of Offshore, 'queryable' may be also
+    // In future versions of Sails/Waterline, 'queryable' may be also
     // be polyfilled by core.
     // 
     // These polyfilled implementations can usually be further optimized at the
     // adapter level, since most databases provide optimizations for internal
     // operations.
+    // 
+    // Full interface reference:
+    // https://github.com/balderdashy/sails-docs/blob/master/contributing/adapter-specification.md
 });

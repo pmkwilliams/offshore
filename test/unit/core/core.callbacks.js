@@ -1,4 +1,4 @@
-var Offshore = require('../../../lib/offshore'),
+var Waterline = require('../../../lib/waterline'),
     assert = require('assert');
 
 describe('Core Lifecycle Callbacks', function() {
@@ -12,16 +12,16 @@ describe('Core Lifecycle Callbacks', function() {
     var person;
 
     before(function(done) {
-      var offshore = new Offshore();
+      var waterline = new Waterline();
 
-      var Person = Offshore.Collection.extend({
+      var Person = Waterline.Collection.extend({
         identity: 'person',
         connection: 'foo',
         attributes: {},
         invalidState: function() {}
       });
 
-      offshore.loadCollection(Person);
+      waterline.loadCollection(Person);
 
       var connections = {
         'foo': {
@@ -29,7 +29,7 @@ describe('Core Lifecycle Callbacks', function() {
         }
       };
 
-      offshore.initialize({ adapters: { foobar: {} }, connections: connections }, function(err, colls) {
+      waterline.initialize({ adapters: { foobar: {} }, connections: connections }, function(err, colls) {
         if(err) return done(err);
         person = colls.collections.person;
         done();
@@ -77,9 +77,9 @@ describe('Core Lifecycle Callbacks', function() {
     var person;
 
     before(function(done) {
-      var offshore = new Offshore();
+      var waterline = new Waterline();
 
-      var Person = Offshore.Collection.extend({
+      var Person = Waterline.Collection.extend({
         identity: 'person',
         connection: 'foo',
         attributes: {
@@ -97,7 +97,7 @@ describe('Core Lifecycle Callbacks', function() {
         beforeValidate: ['changeState_1', 'changeState_2']
       });
 
-      offshore.loadCollection(Person);
+      waterline.loadCollection(Person);
 
       var connections = {
         'foo': {
@@ -105,7 +105,7 @@ describe('Core Lifecycle Callbacks', function() {
         }
       };
 
-      offshore.initialize({ adapters: { foobar: {} }, connections: connections }, function(err, colls) {
+      waterline.initialize({ adapters: { foobar: {} }, connections: connections }, function(err, colls) {
         if(err) return done(err);
         person = colls.collections.person;
         done();
@@ -136,9 +136,9 @@ describe('Core Lifecycle Callbacks', function() {
     var person;
 
     before(function(done) {
-      var offshore = new Offshore();
+      var waterline = new Waterline();
 
-      var Person = Offshore.Collection.extend({
+      var Person = Waterline.Collection.extend({
         identity: 'person',
         connection: 'foo',
         attributes: {
@@ -152,7 +152,7 @@ describe('Core Lifecycle Callbacks', function() {
         beforeValidate: 'changeState_1'
       });
 
-      offshore.loadCollection(Person);
+      waterline.loadCollection(Person);
 
       var connections = {
         'foo': {
@@ -160,7 +160,7 @@ describe('Core Lifecycle Callbacks', function() {
         }
       };
 
-      offshore.initialize({ adapters: { foobar: {} }, connections: connections }, function(err, colls) {
+      waterline.initialize({ adapters: { foobar: {} }, connections: connections }, function(err, colls) {
         if(err) return done(err);
         person = colls.collections.person;
         done();
@@ -191,9 +191,9 @@ describe('Core Lifecycle Callbacks', function() {
     var person;
 
     before(function(done) {
-      var offshore = new Offshore();
+      var waterline = new Waterline();
 
-      var Person = Offshore.Collection.extend({
+      var Person = Waterline.Collection.extend({
         identity: 'person',
         connection: 'foo',
         attributes: {
@@ -205,7 +205,7 @@ describe('Core Lifecycle Callbacks', function() {
         }
       });
 
-      offshore.loadCollection(Person);
+      waterline.loadCollection(Person);
 
       var connections = {
         'foo': {
@@ -213,7 +213,7 @@ describe('Core Lifecycle Callbacks', function() {
         }
       };
 
-      offshore.initialize({ adapters: { foobar: {} }, connections: connections }, function(err, colls) {
+      waterline.initialize({ adapters: { foobar: {} }, connections: connections }, function(err, colls) {
         if(err) return done(err);
         person = colls.collections.person;
         done();

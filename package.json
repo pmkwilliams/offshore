@@ -1,33 +1,44 @@
 {
-  "name": "offshore",
-  "description": "An ORM for Node.js",
-  "version": "0.0.8",
+  "name": "waterline",
+  "description": "An ORM for Node.js and the Sails framework",
+  "version": "0.10.25",
+  "homepage": "http://github.com/balderdashy/waterline",
   "contributors": [
     {
-      "name": "Alexandre Tiertant",
-      "github": "https://github.com/atiertant"
+      "name": "particlebanana",
+      "github": "https://github.com/particlebanana"
+    },
+    {
+      "name": "mikermcneil",
+      "github": "https://github.com/mikermcneil"
+    },
+    {
+      "name": "zolmeister",
+      "github": "https://github.com/zolmeister"
     }
   ],
   "dependencies": {
-    "offshore-validator": "~0.0.2",
-    "async": "1.5.2",
-    "bluebird": "3.2.1",
-    "deep-diff": "0.3.3",
-    "lodash": "3.10.1",
-    "switchback": "2.0.0",
-    "prompt": "0.2.14",
-    "offshore-criteria": "0.0.2",
-    "offshore-schema": "0.0.3"
+    "anchor": "~0.10.2",
+    "async": "~1.2.0",
+    "bluebird": "~2.9.25",
+    "deep-diff": "~0.3.0",
+    "lodash": "~3.9.1",
+    "switchback": "~2.0.0",
+    "prompt": "~0.2.14",
+    "waterline-criteria": "~0.11.1",
+    "waterline-schema": "0.2.0-rc1"
   },
   "devDependencies": {
-    "codeclimate-test-reporter": "0.3.1",
-    "eslint": "1.10.3",
-    "espree": "3.0.1",
-    "istanbul": "0.4.2",
-    "should": "8.2.1",
-    "offshore-memory": "Atlantis-Software/offshore-memory",
-    "offshore-adapter-tests": "Atlantis-Software/offshore-adapter-tests",
-    "mocha": "2.4.5"
+    "codeclimate-test-reporter": "0.0.4",
+    "eslint": "^0.24.0",
+    "eslint-config-standard": "^3.4.0",
+    "eslint-config-standard-warn": "0.0.1",
+    "eslint-nibble": "^0.1.1",
+    "istanbul": "~0.3.14",
+    "mocha": "~2.2.5",
+    "sails-memory": "balderdashy/sails-memory",
+    "should": "~6.0.3",
+    "waterline-adapter-tests": "balderdashy/waterline-adapter-tests"
   },
   "keywords": [
     "mvc",
@@ -37,22 +48,26 @@
     "redis",
     "mongodb",
     "active-record",
-    "offshore"
+    "waterline",
+    "sails",
+    "sails.js"
   ],
-  "repository": "git://github.com/Atlantis-Software/offshore.git",
-  "main": "./lib/offshore",
+  "repository": "git://github.com/balderdashy/waterline.git",
+  "main": "./lib/waterline",
   "scripts": {
     "test": "make test",
+    "pretest": "npm run lint",
     "prepublish": "npm prune",
-    "browserify": "rm -rf .dist && mkdir .dist && browserify lib/offshore.js -s Offshore | uglifyjs > .dist/offshore.min.js",
+    "browserify": "rm -rf .dist && mkdir .dist && browserify lib/waterline.js -s Waterline | uglifyjs > .dist/waterline.min.js",
     "coverage": "make coverage",
-    "lint": "eslint lib --reset"
+    "lint": "eslint lib --reset",
+    "nibble": "eslint-nibble lib"
   },
   "engines": {
-    "node": ">=0.10.0 <=5.x.x"
+    "node": "*"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Atlantis-Software/offshore/issues/new"
+    "url": "https://github.com/balderdashy/waterline/issues/new"
   }
 }

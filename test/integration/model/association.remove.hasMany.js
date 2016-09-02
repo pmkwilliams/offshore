@@ -1,4 +1,4 @@
-var Offshore = require('../../../lib/offshore'),
+var Waterline = require('../../../lib/waterline'),
     assert = require('assert');
 
 describe('Model', function() {
@@ -13,9 +13,9 @@ describe('Model', function() {
       var prefValues = [];
 
       before(function(done) {
-        var offshore = new Offshore();
+        var waterline = new Waterline();
 
-        var User = Offshore.Collection.extend({
+        var User = Waterline.Collection.extend({
           connection: 'my_foo',
           tableName: 'person',
           attributes: {
@@ -26,7 +26,7 @@ describe('Model', function() {
           }
         });
 
-        var Preference = Offshore.Collection.extend({
+        var Preference = Waterline.Collection.extend({
           connection: 'my_foo',
           tableName: 'preference',
           attributes: {
@@ -37,8 +37,8 @@ describe('Model', function() {
           }
         });
 
-        offshore.loadCollection(User);
-        offshore.loadCollection(Preference);
+        waterline.loadCollection(User);
+        waterline.loadCollection(Preference);
 
         var _values = [
           { id: 1, preference: [{ foo: 'bar' }, { foo: 'foobar' }] },
@@ -62,7 +62,7 @@ describe('Model', function() {
           }
         };
 
-        offshore.initialize({ adapters: { foobar: adapterDef }, connections: connections }, function(err, colls) {
+        waterline.initialize({ adapters: { foobar: adapterDef }, connections: connections }, function(err, colls) {
           if(err) done(err);
           collections = colls.collections;
           done();
@@ -108,11 +108,10 @@ describe('Model', function() {
 
           person.save(function(err) {
             assert(err);
-            assert(err.failedTransactions);
-            assert(Array.isArray(err.failedTransactions));
-            assert(err.failedTransactions.length === 2);
-            assert(err.failedTransactions[0].type === 'remove');
-            assert(err.failedTransactions[1].type === 'remove');
+            assert(Array.isArray(err));
+            assert(err.length === 2);
+            assert(err[0].type === 'remove');
+            assert(err[1].type === 'remove');
 
             done();
           });

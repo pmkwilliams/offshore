@@ -25,7 +25,7 @@ module.exports = function() {
   };
 
   // Build a mock global schema object
-  context.offshore.schema = {
+  context.waterline.schema = {
     foo: {
       identity: 'foo',
       attributes: {
@@ -54,12 +54,12 @@ module.exports = function() {
   };
 
   // Build global collections
-  context.offshore.collections.foo = {
+  context.waterline.collections.foo = {
     identity: 'foo',
     _attributes: context._attributes
   };
 
-  context.offshore.collections.bar = {
+  context.waterline.collections.bar = {
     identity: 'bar',
     _attributes: {
       name: { type: 'string' },

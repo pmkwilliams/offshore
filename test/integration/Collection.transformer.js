@@ -1,14 +1,14 @@
-var Offshore = require('../../lib/offshore'),
+var Waterline = require('../../lib/waterline'),
     assert = require('assert');
 
-describe('Offshore Collection', function() {
+describe('Waterline Collection', function() {
 
   describe('with custom column name', function() {
-    var offshore = new Offshore(),
+    var waterline = new Waterline(),
         User;
 
     before(function(done) {
-      var Model = Offshore.Collection.extend({
+      var Model = Waterline.Collection.extend({
         tableName: 'foo',
         connection: 'my_foo',
         attributes: {
@@ -19,7 +19,7 @@ describe('Offshore Collection', function() {
         }
       });
 
-      offshore.loadCollection(Model);
+      waterline.loadCollection(Model);
 
       var connections = {
         'my_foo': {
@@ -27,7 +27,7 @@ describe('Offshore Collection', function() {
         }
       };
 
-      offshore.initialize({ adapters: { foobar: {} }, connections: connections }, function(err, colls) {
+      waterline.initialize({ adapters: { foobar: {} }, connections: connections }, function(err, colls) {
         if(err) return done(err);
         User = colls.collections.foo;
         done();

@@ -3,7 +3,7 @@ var belongsToFixture = require('../../support/fixtures/model/context.belongsTo.f
 var manyToManyFixture = require('../../support/fixtures/model/context.manyToMany.fixture');
 var simpleFixture = require('../../support/fixtures/model/context.simple.fixture');
 var _ = require('lodash');
-var Model = require('../../../lib/offshore/model');
+var Model = require('../../../lib/waterline/model');
 
 describe('instance methods', function() {
   describe('toObject', function() {

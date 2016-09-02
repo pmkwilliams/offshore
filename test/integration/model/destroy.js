@@ -1,4 +1,4 @@
-var Offshore = require('../../../lib/offshore'),
+var Waterline = require('../../../lib/waterline'),
     assert = require('assert');
 
 describe('Model', function() {
@@ -11,8 +11,8 @@ describe('Model', function() {
     var collection;
 
     before(function(done) {
-      var offshore = new Offshore();
-      var Collection = Offshore.Collection.extend({
+      var waterline = new Waterline();
+      var Collection = Waterline.Collection.extend({
         connection: 'my_foo',
         tableName: 'person',
         attributes: {
@@ -24,7 +24,7 @@ describe('Model', function() {
         }
       });
 
-      offshore.loadCollection(Collection);
+      waterline.loadCollection(Collection);
 
       var adapterDef = { destroy: function(con, col, options, cb) { return cb(null, true); }};
 
@@ -34,7 +34,7 @@ describe('Model', function() {
         }
       };
 
-      offshore.initialize({ adapters: { foobar: adapterDef }, connections: connections }, function(err, colls) {
+      waterline.initialize({ adapters: { foobar: adapterDef }, connections: connections }, function(err, colls) {
         if(err) done(err);
         collection = colls.collections.person;
         done();

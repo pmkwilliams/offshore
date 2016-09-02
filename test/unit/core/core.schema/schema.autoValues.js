@@ -1,4 +1,4 @@
-var Offshore = require('../../../../lib/offshore'),
+var Waterline = require('../../../../lib/waterline'),
     assert = require('assert');
 
 describe('Core Schema', function() {
@@ -7,9 +7,9 @@ describe('Core Schema', function() {
     var person;
 
     before(function(done) {
-      var offshore = new Offshore();
+      var waterline = new Waterline();
 
-      var Person = Offshore.Collection.extend({
+      var Person = Waterline.Collection.extend({
         identity: 'person',
         connection: 'foo',
         attributes: {
@@ -20,7 +20,7 @@ describe('Core Schema', function() {
         }
       });
 
-      offshore.loadCollection(Person);
+      waterline.loadCollection(Person);
 
       var connections = {
         'foo': {
@@ -28,7 +28,7 @@ describe('Core Schema', function() {
         }
       };
 
-      offshore.initialize({ adapters: { foobar: {} }, connections: connections }, function(err, colls) {
+      waterline.initialize({ adapters: { foobar: {} }, connections: connections }, function(err, colls) {
         if(err) return done(err);
         person = colls.collections.person;
         done();
@@ -46,9 +46,9 @@ describe('Core Schema', function() {
     var person;
 
     before(function(done) {
-      var offshore = new Offshore();
+      var waterline = new Waterline();
 
-      var Person = Offshore.Collection.extend({
+      var Person = Waterline.Collection.extend({
         identity: 'person',
         connection: 'foo',
         attributes: {
@@ -58,7 +58,7 @@ describe('Core Schema', function() {
         }
       });
 
-      offshore.loadCollection(Person);
+      waterline.loadCollection(Person);
 
       var connections = {
         'foo': {
@@ -66,7 +66,7 @@ describe('Core Schema', function() {
         }
       };
 
-      offshore.initialize({ adapters: { foobar: {} }, connections: connections }, function(err, colls) {
+      waterline.initialize({ adapters: { foobar: {} }, connections: connections }, function(err, colls) {
         if(err) return done(err);
         person = colls.collections.person;
         done();
@@ -86,9 +86,9 @@ describe('Core Schema', function() {
     var person;
 
     before(function(done) {
-      var offshore = new Offshore();
+      var waterline = new Waterline();
 
-      var Person = Offshore.Collection.extend({
+      var Person = Waterline.Collection.extend({
         identity: 'person',
         connection: 'foo',
         attributes: {
@@ -99,7 +99,7 @@ describe('Core Schema', function() {
         }
       });
 
-      offshore.loadCollection(Person);
+      waterline.loadCollection(Person);
 
       var connections = {
         'foo': {
@@ -107,7 +107,7 @@ describe('Core Schema', function() {
         }
       };
 
-      offshore.initialize({ adapters: { foobar: {} }, connections: connections }, function(err, colls) {
+      waterline.initialize({ adapters: { foobar: {} }, connections: connections }, function(err, colls) {
         if(err) return done(err);
         person = colls.collections.person;
         done();
@@ -123,9 +123,9 @@ describe('Core Schema', function() {
     var person;
 
     before(function(done) {
-      var offshore = new Offshore();
+      var waterline = new Waterline();
 
-      var Person = Offshore.Collection.extend({
+      var Person = Waterline.Collection.extend({
         identity: 'person',
         connection: 'foo',
         attributes: {
@@ -136,7 +136,7 @@ describe('Core Schema', function() {
         }
       });
 
-      offshore.loadCollection(Person);
+      waterline.loadCollection(Person);
 
       var connections = {
         'foo': {
@@ -144,7 +144,7 @@ describe('Core Schema', function() {
         }
       };
 
-      offshore.initialize({ adapters: { foobar: {} }, connections: connections }, function(err, colls) {
+      waterline.initialize({ adapters: { foobar: {} }, connections: connections }, function(err, colls) {
         if(err) return done(err);
         person = colls.collections.person;
         done();
@@ -160,9 +160,9 @@ describe('Core Schema', function() {
     var person;
 
     before(function(done) {
-      var offshore = new Offshore();
+      var waterline = new Waterline();
 
-      var Person = Offshore.Collection.extend({
+      var Person = Waterline.Collection.extend({
         identity: 'person',
         connection: 'foo',
         attributes: {
@@ -173,7 +173,7 @@ describe('Core Schema', function() {
         }
       });
 
-      offshore.loadCollection(Person);
+      waterline.loadCollection(Person);
 
       var connections = {
         'foo': {
@@ -181,7 +181,7 @@ describe('Core Schema', function() {
         }
       };
 
-      offshore.initialize({ adapters: { foobar: {} }, connections: connections }, function(err, colls) {
+      waterline.initialize({ adapters: { foobar: {} }, connections: connections }, function(err, colls) {
         if(err) return done(err);
         person = colls.collections.person;
         done();

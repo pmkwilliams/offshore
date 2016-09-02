@@ -1,7 +1,7 @@
 var _ = require('lodash'),
     assert = require('assert'),
     manyToManyFixture = require('../../support/fixtures/model/context.manyToMany.fixture'),
-    Model = require('../../../lib/offshore/model');
+    Model = require('../../../lib/waterline/model');
 
 describe('instance methods', function() {
   describe('many to many association add', function() {
@@ -59,15 +59,15 @@ describe('instance methods', function() {
         };
 
         // Add Collection Methods to all fixture collections
-        fixture.offshore.connections.my_foo._adapter.update = updateFn;
-        fixture.offshore.connections.my_foo._adapter.create = createFn;
-        fixture.offshore.connections.my_foo._adapter.findOne = findOneFn;
+        fixture.waterline.connections.my_foo._adapter.update = updateFn;
+        fixture.waterline.connections.my_foo._adapter.create = createFn;
+        fixture.waterline.connections.my_foo._adapter.findOne = findOneFn;
 
         fixture.update = updateFn;
         fixture.findOne = findOneFn;
-        fixture.offshore.collections.foo.findOne = findOneFn;
-        fixture.offshore.collections.bar_foos__foo_bars.findOne = findOneFn;
-        fixture.offshore.collections.bar_foos__foo_bars.create = createFn;
+        fixture.waterline.collections.foo.findOne = findOneFn;
+        fixture.waterline.collections.bar_foos__foo_bars.findOne = findOneFn;
+        fixture.waterline.collections.bar_foos__foo_bars.create = createFn;
 
 
         model = new Model(fixture, {});

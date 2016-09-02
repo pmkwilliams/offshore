@@ -1,4 +1,4 @@
-var Offshore = require('../../../lib/offshore'),
+var Waterline = require('../../../lib/waterline'),
     assert = require('assert');
 
 describe('.afterDestroy()', function() {
@@ -7,8 +7,8 @@ describe('.afterDestroy()', function() {
     var person, status;
 
     before(function(done) {
-      var offshore = new Offshore();
-      var Model = Offshore.Collection.extend({
+      var waterline = new Waterline();
+      var Model = Waterline.Collection.extend({
         identity: 'user',
         connection: 'foo',
         attributes: {
@@ -24,7 +24,7 @@ describe('.afterDestroy()', function() {
         }
       });
 
-      offshore.loadCollection(Model);
+      waterline.loadCollection(Model);
 
       // Fixture Adapter Def
       var adapterDef = {
@@ -38,7 +38,7 @@ describe('.afterDestroy()', function() {
         }
       };
 
-      offshore.initialize({ adapters: { foobar: adapterDef }, connections: connections }, function(err, colls) {
+      waterline.initialize({ adapters: { foobar: adapterDef }, connections: connections }, function(err, colls) {
         if(err) done(err);
         person = colls.collections.user;
         done();
@@ -70,8 +70,8 @@ describe('.afterDestroy()', function() {
     var person, status;
 
     before(function(done) {
-      var offshore = new Offshore();
-      var Model = Offshore.Collection.extend({
+      var waterline = new Waterline();
+      var Model = Waterline.Collection.extend({
         identity: 'user',
         connection: 'foo',
         attributes: {
@@ -99,7 +99,7 @@ describe('.afterDestroy()', function() {
         create: function(con, col, options, cb) { return cb(null, { status: true }); }
       };
 
-      offshore.loadCollection(Model);
+      waterline.loadCollection(Model);
 
       var connections = {
         'foo': {
@@ -107,7 +107,7 @@ describe('.afterDestroy()', function() {
         }
       };
 
-      offshore.initialize({ adapters: { foobar: adapterDef }, connections: connections }, function(err, colls) {
+      waterline.initialize({ adapters: { foobar: adapterDef }, connections: connections }, function(err, colls) {
         if(err) done(err);
         person = colls.collections.user;
         done();

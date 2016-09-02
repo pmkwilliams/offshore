@@ -1,4 +1,4 @@
-var Validator = require('../../../lib/offshore/core/validations'),
+var Validator = require('../../../lib/waterline/core/validations'),
     assert = require('assert');
 
 describe('validations', function() {
@@ -19,18 +19,16 @@ describe('validations', function() {
     });
 
     it('should validate email type', function(done) {
-      validator.validate({ email: 'foobar@gmail.com' }, function (err, validationErrors) {
-        if (err) { return done(err); }
-        assert(!validationErrors);
+      validator.validate({ email: 'foobar@gmail.com' }, function(errors) {
+        assert(!errors);
         done();
       });
     });
 
     it('should error if incorrect email is passed', function(done) {
-      validator.validate({ email: 'foobar' }, function (err, validationErrors) {
-        if (err) { return done(err); }
-        assert(validationErrors);
-        assert(validationErrors.email);
+      validator.validate({ email: 'foobar' }, function(errors) {
+        assert(errors);
+        assert(errors.email);
         done();
       });
     });

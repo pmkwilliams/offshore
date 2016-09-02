@@ -2,8 +2,8 @@
  * Test dependencies
  */
 var _ = require('lodash');
-var leftOuterJoin = require('../../../lib/offshore/query/integrator/leftOuterJoin');
-var populate = require('../../../lib/offshore/query/integrator/populate');
+var leftOuterJoin = require('../../../lib/waterline/query/integrator/leftOuterJoin');
+var populate = require('../../../lib/waterline/query/integrator/populate');
 var fixtures = {
   cache: _.cloneDeep(require('../../support/fixtures/integrator/cache')),
   populateResults: _.cloneDeep(require('../../support/fixtures/integrator/populateResults'))

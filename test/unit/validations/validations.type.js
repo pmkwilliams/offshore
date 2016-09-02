@@ -1,4 +1,4 @@
-var Validator = require('../../../lib/offshore/core/validations'),
+var Validator = require('../../../lib/waterline/core/validations'),
     assert = require('assert');
 
 describe('validations', function() {
@@ -18,26 +18,23 @@ describe('validations', function() {
     });
 
     it('should validate string type', function(done) {
-      validator.validate({ name: 'foo bar' }, function (err, validationErrors) {
-        if (err) { return done(err); }
-        assert(!validationErrors);
+      validator.validate({ name: 'foo bar' }, function(errors) {
+        assert(!errors);
         done();
       });
     });
 
     it('should validate integer type', function(done) {
-      validator.validate({ age: 27 }, function (err, validationErrors) {
-        if (err) { return done(err); }
-        assert(!validationErrors);
+      validator.validate({ age: 27 }, function(errors) {
+        assert(!errors);
         done();
       });
     });
 
     it('should error if string passed to integer type', function(done) {
-      validator.validate({ age: 'foo bar' }, function (err, validationErrors) {
-        if (err) { return done(err); }
-        assert(validationErrors);
-        assert(validationErrors.age);
+      validator.validate({ age: 'foo bar' }, function(errors) {
+        assert(errors);
+        assert(errors.age);
         done();
       });
     });

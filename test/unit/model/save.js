@@ -1,6 +1,6 @@
-var assert = require('assert');
-var belongsToFixture = require('../../support/fixtures/model/context.belongsTo.fixture');
-var Model = require('../../../lib/offshore/model');
+var assert = require('assert'),
+    belongsToFixture = require('../../support/fixtures/model/context.belongsTo.fixture'),
+    Model = require('../../../lib/waterline/model');
 
 describe('instance methods', function() {
   describe('save', function() {
@@ -15,13 +15,14 @@ describe('instance methods', function() {
       fixture = belongsToFixture();
 
       fixture.findOne = function(criteria, cb) {
+        var parentCriteria = criteria;
 
         if(cb) {
           if(criteria.id) return cb(null, criteria);
           return cb();
         }
 
-        var obj = function() {
+        var obj = function(criteria) {
           return this;
         };
 
@@ -53,7 +54,7 @@ describe('instance methods', function() {
       person.name = 'foobar';
 
       person.save(function(err) {
-        assert(!err);
+        assert(updateValues.name === 'foobar');
         done();
       });
     });
@@ -63,17 +64,17 @@ describe('instance methods', function() {
 
       person.name = 'foobar';
 
-      person.save().then(function() {
+      person.save().then(function(data) {
         assert(updateValues.name === 'foobar');
+        assert(data);
+        assert(data.name);
+        assert(data.name === 'foobar');
         done();
-      }).catch(function() {
-        done(new Error('Promise returned an error'));
       });
     });
 
     describe('promise with 0 updated rows', function(){
       var originalUpdate;
-
       before(function(){
         originalUpdate = fixture.update;
         fixture.update = function(criteria, values, cb) {
@@ -90,26 +91,40 @@ describe('instance methods', function() {
 
         person.name = 'foobar';
 
-        person.save().then(function() {
+        person.save().then(function(data) {
+          assert(!data);
           done("promise should be rejected, not resolved");
         })
-        .catch(function(err) {
+        .catch(function(err){
           assert(err);
           done();
         });
-      });
+      })
     });
 
     describe('promise with object that can\'t be found', function(){
       var originalFind;
-
       before(function(){
         originalFind = fixture.findOne;
-        fixture.update = function(criteria, values, cb) {
-          return cb(null, []);
-        };
         fixture.findOne = function(criteria, cb) {
-          return cb(new Error('Forced Error'));
+          var parentCriteria = criteria;
+
+          if(cb) {
+            if(criteria.id) return cb(null, criteria);
+            return cb();
+          }
+
+          var obj = function(criteria) {
+            return this;
+          };
+
+          obj.prototype.exec = function(cb) {
+            cb("Forced error");
+          };
+
+          obj.prototype.populate = function() { return this; };
+
+          return new obj(criteria);
         };
       });
 
@@ -122,15 +137,16 @@ describe('instance methods', function() {
 
         person.name = 'foobar';
 
-        person.save().then(function() {
-          done(new Error("promise should be rejected, not resolved"));
+        person.save().then(function(data) {
+          assert(!data);
+          done("promise should be rejected, not resolved");
         })
         .catch(function(err){
           assert(err);
           done();
         });
-      });
-    });
+      })
+    })
 
   });
 });

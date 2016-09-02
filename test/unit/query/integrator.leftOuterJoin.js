@@ -1,7 +1,7 @@
 /**
  * Module dependencies
  */
-var leftOuterJoin = require('../../../lib/offshore/query/integrator/leftOuterJoin');
+var leftOuterJoin = require('../../../lib/waterline/query/integrator/leftOuterJoin');
 var fixtures = {
   cache: require('../../support/fixtures/integrator/cache'),
   joinResults: require('../../support/fixtures/integrator/joinResults')

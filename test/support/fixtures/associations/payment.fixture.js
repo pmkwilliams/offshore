@@ -1,4 +1,4 @@
-var Collection = require('../../../../lib/offshore/collection');
+var Collection = require('../../../../lib/waterline/collection');
 
 // Extend for testing purposes
 var Model = Collection.extend({

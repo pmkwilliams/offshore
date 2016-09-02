@@ -1,19 +1,19 @@
-var Offshore = require('../../../lib/offshore'),
+var Waterline = require('../../../lib/waterline'),
     assert = require('assert');
 
-describe('Offshore', function() {
+describe('Waterline', function() {
 
   describe('loader', function() {
-    var offshore;
+    var waterline;
 
     before(function() {
-      offshore = new Offshore();
+      waterline = new Waterline();
     });
 
 
     it('should keep an internal mapping of collection definitions', function() {
-      var collection = Offshore.Collection.extend({ foo: 'bar' });
-      var collections = offshore.loadCollection(collection);
+      var collection = Waterline.Collection.extend({ foo: 'bar' });
+      var collections = waterline.loadCollection(collection);
 
       assert(Array.isArray(collections));
       assert(collections.length === 1);
@@ -24,13 +24,13 @@ describe('Offshore', function() {
   describe('initialize', function() {
 
     describe('without junction tables', function() {
-      var offshore;
+      var waterline;
 
       before(function() {
-        offshore = new Offshore();
+        waterline = new Waterline();
 
         // Setup Fixture Model
-        var collection = Offshore.Collection.extend({
+        var collection = Waterline.Collection.extend({
           tableName: 'foo',
           connection: 'my_foo',
           attributes: {
@@ -38,7 +38,7 @@ describe('Offshore', function() {
           }
         });
 
-        offshore.loadCollection(collection);
+        waterline.loadCollection(collection);
       });
 
 
@@ -50,7 +50,7 @@ describe('Offshore', function() {
           }
         };
 
-        offshore.initialize({ adapters: { foo: {} }, connections: connections }, function(err, data) {
+        waterline.initialize({ adapters: { foo: {} }, connections: connections }, function(err, data) {
           if(err) return done(err);
 
           assert(data.collections);
@@ -63,13 +63,13 @@ describe('Offshore', function() {
 
 
     describe('with junction tables', function() {
-      var offshore;
+      var waterline;
 
       before(function() {
-        offshore = new Offshore();
+        waterline = new Waterline();
 
         // Setup Fixture Models
-        var foo = Offshore.Collection.extend({
+        var foo = Waterline.Collection.extend({
           tableName: 'foo',
           connection: 'my_foo',
           attributes: {
@@ -81,7 +81,7 @@ describe('Offshore', function() {
           }
         });
 
-        var bar = Offshore.Collection.extend({
+        var bar = Waterline.Collection.extend({
           tableName: 'bar',
           connection: 'my_foo',
           attributes: {
@@ -92,8 +92,8 @@ describe('Offshore', function() {
           }
         });
 
-        offshore.loadCollection(foo);
-        offshore.loadCollection(bar);
+        waterline.loadCollection(foo);
+        waterline.loadCollection(bar);
       });
 
 
@@ -105,7 +105,7 @@ describe('Offshore', function() {
           }
         };
 
-        offshore.initialize({ adapters: { foo: {} }, connections: connections }, function(err, data) {
+        waterline.initialize({ adapters: { foo: {} }, connections: connections }, function(err, data) {
           if(err) return done(err);
 
           assert(data.collections);

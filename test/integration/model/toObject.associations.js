@@ -1,4 +1,4 @@
-var Offshore = require('../../../lib/offshore'),
+var Waterline = require('../../../lib/waterline'),
     assert = require('assert');
 
 describe('Model', function() {
@@ -11,9 +11,9 @@ describe('Model', function() {
     var collection;
 
     before(function(done) {
-      var offshore = new Offshore();
+      var waterline = new Waterline();
 
-      var Foo = Offshore.Collection.extend({
+      var Foo = Waterline.Collection.extend({
         connection: 'my_foo',
         tableName: 'foo',
         attributes: {
@@ -29,7 +29,7 @@ describe('Model', function() {
         }
       });
 
-      var Bar = Offshore.Collection.extend({
+      var Bar = Waterline.Collection.extend({
         connection: 'my_foo',
         tableName: 'bar',
         attributes: {
@@ -40,7 +40,7 @@ describe('Model', function() {
         }
       });
 
-      var Baz = Offshore.Collection.extend({
+      var Baz = Waterline.Collection.extend({
         connection: 'my_foo',
         tableName: 'baz',
         attributes: {
@@ -50,9 +50,9 @@ describe('Model', function() {
         }
       });
 
-      offshore.loadCollection(Foo);
-      offshore.loadCollection(Bar);
-      offshore.loadCollection(Baz);
+      waterline.loadCollection(Foo);
+      waterline.loadCollection(Bar);
+      waterline.loadCollection(Baz);
 
       var connections = {
         'my_foo': {
@@ -60,7 +60,7 @@ describe('Model', function() {
         }
       };
 
-      offshore.initialize({ adapters: { foobar: {} }, connections: connections }, function(err, colls) {
+      waterline.initialize({ adapters: { foobar: {} }, connections: connections }, function(err, colls) {
         if(err) done(err);
         collection = colls.collections.foo;
         done();

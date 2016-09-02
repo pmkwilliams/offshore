@@ -1,6 +1,6 @@
 var util = require('util');
 var assert = require('assert');
-var reduceAssociations = require('../../../lib/offshore/utils/nestedOperations/reduceAssociations');
+var reduceAssociations = require('../../../lib/waterline/utils/nestedOperations/reduceAssociations');
 
 
 describe('nestedOperations / reduceAsscociations', function () {

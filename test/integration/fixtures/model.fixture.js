@@ -3,9 +3,9 @@
  *
  */
 
-var Offshore = require('../../../lib/offshore');
+var Waterline = require('../../../lib/waterline');
 
-module.exports = Offshore.Collection.extend({
+module.exports = Waterline.Collection.extend({
 
   tableName: 'test',
   connection: 'my_foo',

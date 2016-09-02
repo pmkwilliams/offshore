@@ -1,4 +1,4 @@
-var Validator = require('../../../lib/offshore/core/validations'),
+var Validator = require('../../../lib/waterline/core/validations'),
     assert = require('assert');
 
 describe('validations', function() {
@@ -20,8 +20,7 @@ describe('validations', function() {
     });
 
     it('should error if invalid enum is set', function(done) {
-      validator.validate({ sex: 'other' }, function(err, errors) {
-        assert(!err, err);
+      validator.validate({ sex: 'other' }, function(errors) {
         assert(errors);
         assert(errors.sex);
         assert(errors.sex[0].rule === 'in');
@@ -30,8 +29,7 @@ describe('validations', function() {
     });
 
     it('should NOT error if valid enum is set', function(done) {
-      validator.validate({ sex: 'male' }, function(err, errors) {
-        assert(!err, err);
+      validator.validate({ sex: 'male' }, function(errors) {
         assert(!errors);
         done();
       });

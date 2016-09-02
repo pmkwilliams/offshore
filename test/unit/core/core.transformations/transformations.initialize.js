@@ -1,4 +1,4 @@
-var Transformer = require('../../../../lib/offshore/core/transformations'),
+var Transformer = require('../../../../lib/waterline/core/transformations'),
     assert = require('assert');
 
 describe('Core Transformations', function() {

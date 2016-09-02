@@ -1,25 +1,25 @@
 /**
- * A simple example of how to use Offshore v0.10 with Express
+ * A simple example of how to use Waterline v0.10 with Express
  */
 
 var express = require('express'),
     _ = require('lodash'),
     app = express(),
-    Offshore = require('offshore'),
+    Waterline = require('waterline'),
     bodyParser = require('body-parser'),
     methodOverride = require('method-override');
 
 
 
 // Instantiate a new instance of the ORM
-var orm = new Offshore();
+var orm = new Waterline();
 
 
 //////////////////////////////////////////////////////////////////
 // WATERLINE CONFIG
 //////////////////////////////////////////////////////////////////
 
-// Require any offshore compatible adapters here
+// Require any waterline compatible adapters here
 var diskAdapter = require('sails-disk'),
     mysqlAdapter = require('sails-mysql');
 
@@ -28,7 +28,7 @@ var diskAdapter = require('sails-disk'),
 var config = {
 
   // Setup Adapters
-  // Creates named adapters that have been required
+  // Creates named adapters that have have been required
   adapters: {
     'default': diskAdapter,
     disk: diskAdapter,
@@ -60,7 +60,7 @@ var config = {
 // WATERLINE MODELS
 //////////////////////////////////////////////////////////////////
 
-var User = Offshore.Collection.extend({
+var User = Waterline.Collection.extend({
 
   identity: 'user',
   connection: 'myLocalDisk',
@@ -71,7 +71,7 @@ var User = Offshore.Collection.extend({
   }
 });
 
-var Pet = Offshore.Collection.extend({
+var Pet = Waterline.Collection.extend({
 
   identity: 'pet',
   connection: 'myLocalMySql',
@@ -145,7 +145,7 @@ app.put('/users/:id', function(req, res) {
 // START WATERLINE
 //////////////////////////////////////////////////////////////////
 
-// Start Offshore passing adapters in
+// Start Waterline passing adapters in
 orm.initialize(config, function(err, models) {
   if(err) throw err;
 

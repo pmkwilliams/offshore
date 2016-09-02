@@ -1,4 +1,4 @@
-var Offshore = require('../../../lib/offshore'),
+var Waterline = require('../../../lib/waterline'),
     assert = require('assert');
 
 describe('Core Validator', function() {
@@ -7,9 +7,9 @@ describe('Core Validator', function() {
     var person;
 
     before(function(done) {
-      var offshore = new Offshore();
+      var waterline = new Waterline();
 
-      var Person = Offshore.Collection.extend({
+      var Person = Waterline.Collection.extend({
         identity: 'person',
         connection: 'foo',
         attributes: {
@@ -20,15 +20,12 @@ describe('Core Validator', function() {
           last_name: {
             type: 'string',
             required: true,
-            defaultsTo: 'Smith',
-            meta: {
-              foo: 'bar'
-            }
+            defaultsTo: 'Smith'
           }
         }
       });
 
-      offshore.loadCollection(Person);
+      waterline.loadCollection(Person);
 
       var connections = {
         'foo': {
@@ -36,12 +33,10 @@ describe('Core Validator', function() {
         }
       };
 
-      offshore.initialize({ adapters: { foobar: {} }, connections: connections }, function(err, colls) {
-        if(err) {
-          return done(err);
-        }
+      waterline.initialize({ adapters: { foobar: {} }, connections: connections }, function(err, colls) {
+        if(err) return done(err);
         person = colls.collections.person;
-        return done();
+        done();
       });
     });
 
@@ -64,10 +59,6 @@ describe('Core Validator', function() {
       assert(!person._validator.validations.last_name.defaultsTo);
     });
 
-    it('should ignore the meta key', function() {
-      assert(!person._validator.validations.last_name.meta);
-    });
-
   });
 
 
@@ -75,9 +66,9 @@ describe('Core Validator', function() {
     var person;
 
     before(function(done) {
-      var offshore = new Offshore();
+      var waterline = new Waterline();
 
-      var Person = Offshore.Collection.extend({
+      var Person = Waterline.Collection.extend({
         identity: 'person',
         connection: 'foo',
         attributes: {
@@ -98,7 +89,7 @@ describe('Core Validator', function() {
         }
       });
 
-      offshore.loadCollection(Person);
+      waterline.loadCollection(Person);
 
       var connections = {
         'foo': {
@@ -106,10 +97,8 @@ describe('Core Validator', function() {
         }
       };
 
-      offshore.initialize({ adapters: { foobar: {} }, connections: connections }, function(err, colls) {
-        if(err) {
-          return done(err);
-        }
+      waterline.initialize({ adapters: { foobar: {} }, connections: connections }, function(err, colls) {
+        if(err) return done(err);
         person = colls.collections.person;
         done();
       });
@@ -117,72 +106,65 @@ describe('Core Validator', function() {
 
 
     it('should validate types', function(done) {
-      person._validator.validate({ first_name: 27, last_name: 32 }, function(err, validationErrors) {
-        assert(!err, err);
-        assert(validationErrors);
-        assert(validationErrors.first_name);
-        assert(validationErrors.last_name);
-        assert(validationErrors.first_name[0].rule === 'string');
-        assert(validationErrors.last_name[0].rule === 'string');
+      person._validator.validate({ first_name: 27, last_name: 32 }, function(err) {
+        assert(err);
+        assert(err.first_name);
+        assert(err.last_name);
+        assert(err.first_name[0].rule === 'string');
+        assert(err.last_name[0].rule === 'string');
         done();
       });
     });
 
     it('should validate required status', function(done) {
-      person._validator.validate({ first_name: 'foo' }, function(err, validationErrors) {
-        assert(!err, err);
-        assert(validationErrors);
-        assert(validationErrors);
-        assert(validationErrors.last_name);
-        assert(validationErrors.last_name[1].rule === 'required');
+      person._validator.validate({ first_name: 'foo' }, function(err) {
+        assert(err);
+        assert(err);
+        assert(err.last_name);
+        assert(err.last_name[1].rule === 'required');
         done();
       });
     });
 
     it('should validate all fields with presentOnly omitted or set to false', function(done) {
-      person._validator.validate({ city: 'Washington' }, function(err, validationErrors) {
-        assert(!err, err);
-        assert(validationErrors, 'expected validation errors');
-        assert(!validationErrors.first_name);
-        assert(validationErrors.last_name);
-        assert(validationErrors.last_name[0].rule === 'string');
-        assert(validationErrors.city);
-        assert(validationErrors.city[0].rule === 'maxLength');
+      person._validator.validate({ city: 'Washington' }, function(err) {
+        assert(err);
+        assert(!err.first_name);
+        assert(err.last_name);
+        assert(err.last_name[0].rule === 'string');
+        assert(err.city);
+        assert(err.city[0].rule === 'maxLength');
 
-        person._validator.validate({ city: 'Washington' }, false, function(err, validationErrors) {
-          assert(!err, err);
-          assert(validationErrors, 'expected validation errors');
-          assert(!validationErrors.first_name);
-          assert(validationErrors.last_name);
-          assert(validationErrors.last_name[0].rule === 'string');
-          assert(validationErrors.city);
-          assert(validationErrors.city[0].rule === 'maxLength');
+        person._validator.validate({ city: 'Washington' }, false, function(err) {
+          assert(err);
+          assert(!err.first_name);
+          assert(err.last_name);
+          assert(err.last_name[0].rule === 'string');
+          assert(err.city);
+          assert(err.city[0].rule === 'maxLength');
           done();
         });
       });
     });
 
     it('should, for presentOnly === true, validate present values only, thus not need the required last_name', function(done) {
-      person._validator.validate({ first_name: 'foo' }, true, function(err, validationErrors) {
-        assert(!err, err);
-        assert(!validationErrors, 'expected no validation errors');
+      person._validator.validate({ first_name: 'foo' }, true, function(err) {
+        assert(!err);
         done();
       });
     });
 
     it('should validate only the specified value', function(done) {
       person._validator.validate({ first_name: 'foo', last_name: 32, city: 'Washington' },
-        'first_name', function(err, validationErrors) {
-          assert(!err, err);
-          assert(!validationErrors, 'expected no validation errors');
+        'first_name', function(err) {
+          assert(!err);
 
           person._validator.validate({ first_name: 'foo', last_name: 32, city: 'Washington' },
-            'last_name', function(err, validationErrors) {
-              assert(!err, err);
-              assert(validationErrors);
-              assert(validationErrors.last_name);
-              assert(validationErrors.last_name[0].rule === 'string');
-              assert(!validationErrors.city);
+            'last_name', function(err) {
+              assert(err);
+              assert(err.last_name);
+              assert(err.last_name[0].rule === 'string');
+              assert(!err.city);
               done();
             });
         });
@@ -190,17 +172,16 @@ describe('Core Validator', function() {
 
     it('should validate only the specified values', function(done) {
       person._validator.validate({ first_name: 'foo', last_name: 32, city: 'Atlanta' },
-        ['first_name', 'city'], function(err,validationErrors) {
-          assert(!err, err);
-          assert(!validationErrors);
+        ['first_name', 'city'], function(err) {
+          assert(!err);
 
           person._validator.validate({ first_name: 'foo', last_name: 32, city: 'Washington' },
-            ['first_name', 'city'], function(err,validationErrors) {
-              assert(validationErrors);
-              assert(!validationErrors.first_name);
-              assert(!validationErrors.last_name);
-              assert(validationErrors.city);
-              assert(validationErrors.city[0].rule === 'maxLength');
+            ['first_name', 'city'], function(err) {
+              assert(err);
+              assert(!err.first_name);
+              assert(!err.last_name);
+              assert(err.city);
+              assert(err.city[0].rule === 'maxLength');
               done();
             });
         });
